@@ -29,15 +29,23 @@
       <li><a href="https://vue-loader.vuejs.org" target="_blank">vue-loader</a></li>
       <li><a href="https://github.com/vuejs/awesome-vue" target="_blank">awesome-vue</a></li>
     </ul>
+    {{values}} 
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
+import { ValuesService } from '../services/values.service';
 
 @Component
 export default class HelloWorld extends Vue {
-  @Prop() private msg!: string;
+  @Prop() public msg!: string;
+
+  public values: string[] = [];
+
+  public async mounted() {
+    this.values = await ValuesService.getValues();
+  }
 }
 </script>
 
