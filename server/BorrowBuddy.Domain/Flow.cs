@@ -6,7 +6,7 @@ namespace BorrowBuddy.Domain {
     public DateTimeOffset Timestamp { get; set; }
     public Participant Lender { get; set; }
     public Participant Lendee { get; set; }
-    public decimal Amount { get; set; }
+    public Money Amount { get; set; }
     public string Comment { get; set; }
   }
 }

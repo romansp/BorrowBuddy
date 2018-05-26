@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <PropertyGroup>
+    <RtTargetFile>$(ProjectDir)models.ts</RtTargetFile>
+    <RtConfigurationMethod>BorrowBuddy.Shared.TypescriptGenerationConfiguration.Configure</RtConfigurationMethod>
+    <RtDivideTypesAmongFiles>false</RtDivideTypesAmongFiles>
+    <RtTargetDirectory>$(ProjectDir)Scripts\MyApplication</RtTargetDirectory>
+    <RtBypassTypeScriptCompilation>false</RtBypassTypeScriptCompilation>
+    <RtDisable>false</RtDisable>
+  </PropertyGroup>
+</Project>
