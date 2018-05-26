@@ -1,9 +1,7 @@
 using System;
 
-namespace BorrowBuddy.Domain
-{
-  public class Flow
-  {
+namespace BorrowBuddy.Domain {
+  public class Flow {
     public long Id { get; set; }
     public DateTimeOffset Timestamp { get; set; }
     public Participant Lender { get; set; }
