@@ -11,6 +11,7 @@ export interface Currency
 {
   code: string;
   symbol: string;
+  precision: number;
 }
 export interface Flow
 {

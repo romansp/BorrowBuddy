@@ -4,14 +4,16 @@ using BorrowBuddy.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BorrowBuddy.Migrations
 {
     [DbContext(typeof(BorrowBuddyContext))]
-    partial class BorrowBuddyContextModelSnapshot : ModelSnapshot
+    [Migration("20180526153258_CurrencyPrecision")]
+    partial class CurrencyPrecision
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

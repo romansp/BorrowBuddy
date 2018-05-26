@@ -5,6 +5,7 @@ namespace BorrowBuddy.Data.Configuration {
   public class Currency : IEntityTypeConfiguration<Domain.Currency> {
     public void Configure(EntityTypeBuilder<Domain.Currency> builder) {
       builder.HasKey(p => p.Code);
+      builder.Property(p => p.Precision).HasDefaultValue(1);
     }
   }
 }
