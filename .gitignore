@@ -6,4 +6,5 @@ project.lock.json
 .DS_Store
 *.pyc
 dist
-/.vs
+.vs/
+*.DotSettings.user
