@@ -1,6 +1,6 @@
 # Starting server
 ```
-cd server
+cd .\server\BorrowBuddy\
 $Env:ASPNETCORE_ENVIRONMENT = "Development"
 dotnet watch run
 ```
