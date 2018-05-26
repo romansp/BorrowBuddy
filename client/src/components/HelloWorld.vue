@@ -29,22 +29,32 @@
       <li><a href="https://vue-loader.vuejs.org" target="_blank">vue-loader</a></li>
       <li><a href="https://github.com/vuejs/awesome-vue" target="_blank">awesome-vue</a></li>
     </ul>
-    {{values}} 
+    {{participants}} 
+    {{flows}} 
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
-import { ValuesService } from '../services/values.service';
+import { ParticipantsService, FlowsService } from '../services';
+import { Participant, Flow } from '@/shared/models';
 
 @Component
 export default class HelloWorld extends Vue {
   @Prop() public msg!: string;
 
-  public values: string[] = [];
+  public participants: Participant[] = [];
+  public flows: Flow[] = [];
 
   public async mounted() {
-    this.values = await ValuesService.getValues();
+    try {
+      const [participants, flows] = await Promise.all([
+        ParticipantsService.getAll(),
+        FlowsService.getAll()
+      ]);
+      this.participants = participants;
+      this.flows = flows;
+    } catch {}
   }
 }
 </script>

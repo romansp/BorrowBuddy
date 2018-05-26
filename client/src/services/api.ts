@@ -2,7 +2,7 @@ import { IPayload, PayloadMapper, PayloadMessageTypes } from '../model';
 import axios from 'axios';
 
 export const server = axios.create({
-  baseURL: 'http://localhost:5000/api/',
+  baseURL: 'https://localhost:44347/api/',
   timeout: 1000
 });
 
