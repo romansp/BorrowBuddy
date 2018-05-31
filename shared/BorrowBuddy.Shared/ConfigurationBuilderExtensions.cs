@@ -1,4 +1,4 @@
-﻿using Reinforced.Typings.Ast.TypeNames;
+using Reinforced.Typings.Ast.TypeNames;
 using Reinforced.Typings.Fluent;
 using System;
 using System.Collections.Generic;
@@ -9,7 +9,8 @@ namespace BorrowBuddy.Shared {
   internal static class ConfigurationBuilderExtensions {
 
     private static readonly Dictionary<Type, RtTypeName> _typeSubstitutes = new Dictionary<Type, RtTypeName> {
-      { typeof(DateTimeOffset), new RtSimpleTypeName("string") }
+      { typeof(DateTimeOffset), new RtSimpleTypeName("string") },
+      { typeof(Guid), new RtSimpleTypeName("string") }
     };
 
     public static void AddExports(this ConfigurationBuilder builder, Type markerType) {

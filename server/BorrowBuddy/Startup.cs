@@ -18,8 +18,9 @@ namespace BorrowBuddy {
       services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
       services.AddCors();
 
-      services.AddDbContextPool<BorrowBuddyContext>(options =>
-              options.UseSqlServer(Configuration.GetConnectionString("BorrowBuddyContext")));
+      services.AddDbContextPool<BorrowBuddyContext>(options => options
+              .UseLazyLoadingProxies()
+              .UseSqlServer(Configuration.GetConnectionString("BorrowBuddyContext")));
     }
 
     public void Configure(IApplicationBuilder app, IHostingEnvironment env) {

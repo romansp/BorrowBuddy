@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BorrowBuddy.Data;
 using BorrowBuddy.Domain;
+using System;
 
 namespace BorrowBuddy.Controllers {
 
@@ -22,8 +23,8 @@ namespace BorrowBuddy.Controllers {
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<Flow>> GetFlow(long id) {
-      var flow = await _context.Flows.FindAsync(id);
+    public async Task<ActionResult<Flow>> GetFlow(Guid id) {
+      var flow = await _context.Flows.FirstOrDefaultAsync(m => m.Id == id);
 
       if (flow == null) {
         return NotFound();
@@ -33,7 +34,7 @@ namespace BorrowBuddy.Controllers {
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> PutFlow([FromRoute] long id, [FromBody] Flow flow) {
+    public async Task<IActionResult> PutFlow([FromRoute] Guid id, [FromBody] Flow flow) {
       if (id != flow.Id) {
         return BadRequest();
       }
@@ -63,8 +64,8 @@ namespace BorrowBuddy.Controllers {
     }
 
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteFlow(long id) {
-      var flow = await _context.Flows.FindAsync(id);
+    public async Task<IActionResult> DeleteFlow(Guid id) {
+      var flow = await _context.Flows.FirstOrDefaultAsync(m => m.Id == id);
       if (flow == null) {
         return NotFound();
       }
@@ -75,7 +76,7 @@ namespace BorrowBuddy.Controllers {
       return NoContent();
     }
 
-    private Task<bool> FlowExistsAsync(long id) {
+    private Task<bool> FlowExistsAsync(Guid id) {
       return _context.Flows.AnyAsync(e => e.Id == id);
     }
   }

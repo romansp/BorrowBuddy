@@ -2,30 +2,32 @@
 //     Changes to this file may cause incorrect behavior and will be lost if
 //     the code is regenerated.
 
+export interface Currency
+{
+  code: string;
+  symbol: string;
+  scale: number;
+}
+export interface Flow
+{
+  id: string;
+  lender: Participant;
+  lendee: Participant;
+  amount: Money;
+  comment: string;
+  timestamp: string;
+}
 export interface Money
 {
   value: number;
   currency: Currency;
 }
-export interface Currency
-{
-  code: string;
-  symbol: string;
-  precision: number;
-}
-export interface Flow
-{
-  id: number;
-  timestamp: string;
-  lender: Participant;
-  lendee: Participant;
-  amount: Money;
-  comment: string;
-}
 export interface Participant
 {
-  id: number;
+  id: string;
   firstName: string;
   middleName: string;
   lastName: string;
+  lended: Flow[];
+  borrowed: Flow[];
 }

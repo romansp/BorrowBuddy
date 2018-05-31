@@ -10,23 +10,29 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BorrowBuddy.Migrations
 {
     [DbContext(typeof(BorrowBuddyContext))]
-    [Migration("20180526152408_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20180531190948_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.0-rc1-32029")
+                .HasAnnotation("ProductVersion", "2.1.0-rtm-30799")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("BorrowBuddy.Domain.Currency", b =>
                 {
                     b.Property<string>("Code")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(3);
 
-                    b.Property<string>("Symbol");
+                    b.Property<int>("Scale")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(100);
+
+                    b.Property<string>("Symbol")
+                        .HasMaxLength(10);
 
                     b.HasKey("Code");
 
@@ -35,15 +41,16 @@ namespace BorrowBuddy.Migrations
 
             modelBuilder.Entity("BorrowBuddy.Domain.Flow", b =>
                 {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("Comment");
 
-                    b.Property<long?>("LendeeId");
+                    b.Property<Guid?>("LendeeId")
+                        .IsRequired();
 
-                    b.Property<long?>("LenderId");
+                    b.Property<Guid?>("LenderId")
+                        .IsRequired();
 
                     b.Property<DateTimeOffset>("Timestamp");
 
@@ -58,16 +65,18 @@ namespace BorrowBuddy.Migrations
 
             modelBuilder.Entity("BorrowBuddy.Domain.Participant", b =>
                 {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("FirstName")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(36);
 
-                    b.Property<string>("LastName");
+                    b.Property<string>("LastName")
+                        .HasMaxLength(36);
 
-                    b.Property<string>("MiddleName");
+                    b.Property<string>("MiddleName")
+                        .HasMaxLength(36);
 
                     b.HasKey("Id");
 
@@ -77,22 +86,22 @@ namespace BorrowBuddy.Migrations
             modelBuilder.Entity("BorrowBuddy.Domain.Flow", b =>
                 {
                     b.HasOne("BorrowBuddy.Domain.Participant", "Lendee")
-                        .WithMany()
-                        .HasForeignKey("LendeeId");
+                        .WithMany("Borrowed")
+                        .HasForeignKey("LendeeId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("BorrowBuddy.Domain.Participant", "Lender")
-                        .WithMany()
-                        .HasForeignKey("LenderId");
+                        .WithMany("Lended")
+                        .HasForeignKey("LenderId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.OwnsOne("BorrowBuddy.Domain.Money", "Amount", b1 =>
                         {
-                            b1.Property<long?>("FlowId")
-                                .ValueGeneratedOnAdd()
-                                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                            b1.Property<Guid?>("FlowId");
 
                             b1.Property<string>("CurrencyCode");
 
-                            b1.Property<int>("Value");
+                            b1.Property<long>("Value");
 
                             b1.HasIndex("CurrencyCode");
 

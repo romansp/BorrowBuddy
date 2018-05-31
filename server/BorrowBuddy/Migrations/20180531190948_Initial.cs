@@ -1,10 +1,9 @@
 ﻿using System;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BorrowBuddy.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,8 +11,9 @@ namespace BorrowBuddy.Migrations
                 name: "Currencies",
                 columns: table => new
                 {
-                    Code = table.Column<string>(nullable: false),
-                    Symbol = table.Column<string>(nullable: true)
+                    Code = table.Column<string>(maxLength: 3, nullable: false),
+                    Symbol = table.Column<string>(maxLength: 10, nullable: true),
+                    Scale = table.Column<int>(nullable: false, defaultValue: 100)
                 },
                 constraints: table =>
                 {
@@ -24,11 +24,10 @@ namespace BorrowBuddy.Migrations
                 name: "Participants",
                 columns: table => new
                 {
-                    Id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    FirstName = table.Column<string>(nullable: false),
-                    MiddleName = table.Column<string>(nullable: true),
-                    LastName = table.Column<string>(nullable: true)
+                    Id = table.Column<Guid>(nullable: false),
+                    FirstName = table.Column<string>(maxLength: 36, nullable: false),
+                    MiddleName = table.Column<string>(maxLength: 36, nullable: true),
+                    LastName = table.Column<string>(maxLength: 36, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -39,14 +38,13 @@ namespace BorrowBuddy.Migrations
                 name: "Flows",
                 columns: table => new
                 {
-                    Id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Timestamp = table.Column<DateTimeOffset>(nullable: false),
-                    LenderId = table.Column<long>(nullable: true),
-                    LendeeId = table.Column<long>(nullable: true),
-                    Amount_Value = table.Column<int>(nullable: false),
+                    Id = table.Column<Guid>(nullable: false),
+                    LenderId = table.Column<Guid>(nullable: false),
+                    LendeeId = table.Column<Guid>(nullable: false),
+                    Amount_Value = table.Column<long>(nullable: false),
                     Amount_CurrencyCode = table.Column<string>(nullable: true),
-                    Comment = table.Column<string>(nullable: true)
+                    Comment = table.Column<string>(nullable: true),
+                    Timestamp = table.Column<DateTimeOffset>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -56,7 +54,7 @@ namespace BorrowBuddy.Migrations
                         column: x => x.LendeeId,
                         principalTable: "Participants",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Flows_Participants_LenderId",
                         column: x => x.LenderId,

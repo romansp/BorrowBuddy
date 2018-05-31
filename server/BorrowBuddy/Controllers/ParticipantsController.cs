@@ -4,6 +4,7 @@ using BorrowBuddy.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BorrowBuddy.Domain;
+using System;
 
 namespace BorrowBuddy.Controllers {
 
@@ -22,8 +23,8 @@ namespace BorrowBuddy.Controllers {
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<Participant>> GetParticipant(long id) {
-      var participant = await _context.Participants.SingleOrDefaultAsync(m => m.Id == id);
+    public async Task<ActionResult<Participant>> GetParticipant(Guid id) {
+      var participant = await _context.Participants.FirstOrDefaultAsync(m => m.Id == id);
 
       if (participant == null) {
         return NotFound();
@@ -33,7 +34,7 @@ namespace BorrowBuddy.Controllers {
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> PutParticipant([FromRoute] long id, [FromBody] Participant participant) {
+    public async Task<IActionResult> PutParticipant([FromRoute] Guid id, [FromBody] Participant participant) {
       if (id != participant.Id) {
         return BadRequest();
       }
@@ -63,8 +64,8 @@ namespace BorrowBuddy.Controllers {
     }
 
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteParticipant(long id) {
-      var participant = await _context.Participants.SingleOrDefaultAsync(m => m.Id == id);
+    public async Task<IActionResult> DeleteParticipant(Guid id) {
+      var participant = await _context.Participants.FirstOrDefaultAsync(m => m.Id == id);
       if (participant == null) {
         return NotFound();
       }
@@ -75,7 +76,7 @@ namespace BorrowBuddy.Controllers {
       return NoContent();
     }
 
-    private Task<bool> ParticipantExistsAsync(long id) {
+    private Task<bool> ParticipantExistsAsync(Guid id) {
       return _context.Participants.AnyAsync(e => e.Id == id);
     }
   }
