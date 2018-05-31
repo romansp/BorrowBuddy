@@ -1,37 +1,8 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Compile Remove="Migrations\20180531180426_CurrencyRequired.cs" />
-    <Compile Remove="Migrations\20180531180426_CurrencyRequired.Designer.cs" />
-    <Compile Remove="Migrations\20180531180610_CurrencyRequired.cs" />
-    <Compile Remove="Migrations\20180531180610_CurrencyRequired.Designer.cs" />
-    <Compile Remove="Migrations\20180531180637_CurrencyRequired.cs" />
-    <Compile Remove="Migrations\20180531180637_CurrencyRequired.Designer.cs" />
-    <Compile Remove="Migrations\20180531181850_GuidId.cs" />
-    <Compile Remove="Migrations\20180531181850_GuidId.Designer.cs" />
-    <Compile Remove="Migrations\20180531182252_GuidId.cs" />
-    <Compile Remove="Migrations\20180531182252_GuidId.Designer.cs" />
-    <Compile Remove="Migrations\20180531182627_Initial.cs" />
-    <Compile Remove="Migrations\20180531182627_Initial.Designer.cs" />
-    <Compile Remove="Migrations\20180531183020_Initial.cs" />
-    <Compile Remove="Migrations\20180531183020_Initial.Designer.cs" />
-    <Compile Remove="Migrations\20180531184227_Initial.cs" />
-    <Compile Remove="Migrations\20180531184227_Initial.Designer.cs" />
-    <Compile Remove="Migrations\20180531184750_Initial.cs" />
-    <Compile Remove="Migrations\20180531184750_Initial.Designer.cs" />
-    <Compile Remove="Migrations\20180531185022_Initial.cs" />
-    <Compile Remove="Migrations\20180531185022_Initial.Designer.cs" />
-    <Compile Remove="Migrations\20180531185239_Initial.cs" />
-    <Compile Remove="Migrations\20180531185239_Initial.Designer.cs" />
-    <Compile Remove="Migrations\20180531185941_Initial.cs" />
-    <Compile Remove="Migrations\20180531185941_Initial.Designer.cs" />
-    <Compile Remove="Migrations\20180531190136_Initial.cs" />
-    <Compile Remove="Migrations\20180531190136_Initial.Designer.cs" />
-  </ItemGroup>
 
   <ItemGroup>
     <Folder Include="wwwroot\" />
