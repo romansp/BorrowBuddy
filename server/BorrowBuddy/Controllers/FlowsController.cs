@@ -56,7 +56,17 @@ namespace BorrowBuddy.Controllers {
 
     [HttpPost]
     [ProducesResponseType(201)]
-    public async Task<ActionResult<Flow>> PostFlow(Flow flow) {
+    public async Task<ActionResult<Flow>> PostFlow(Models.Requests.FlowPost flowPost) {
+      var flow = new Flow() {
+        Amount = new Money() {
+          Value = flowPost.Amount,
+          Currency = await _context.Currencies.FirstAsync(c => c.Code == "BYN")
+        },
+        Comment = flowPost.Comment,
+        Timestamp = DateTimeOffset.UtcNow,
+        Lendee = await _context.Participants.FirstOrDefaultAsync(c => c.Id == flowPost.LendeeId),
+        Lender = await _context.Participants.FirstOrDefaultAsync(c => c.Id == flowPost.LenderId)
+      };
       _context.Flows.Add(flow);
       await _context.SaveChangesAsync();
 
