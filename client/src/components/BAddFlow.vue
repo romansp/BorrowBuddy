@@ -1,21 +1,39 @@
 <template>
-  <form method="post" @submit.prevent="submit">
+  <form 
+    method="post" 
+    @submit.prevent="submit">
     <div>
-      From: <select v-model="from" name="from">
-        <option v-for="participant in participants" :key="participant.id" :value="participant.id">{{participant.firstName}}</option>
+      From: <select 
+        v-model="from" 
+        name="from">
+        <option 
+          v-for="participant in participants" 
+          :key="participant.id" 
+          :value="participant.id">{{ participant.firstName }}</option>
       </select>
     </div>
     <div>
-       To: <select v-model="to" name="to">
-        <option v-for="participant in participants" :key="participant.id" :value="participant.id">{{participant.firstName}}</option>
+      To: <select 
+        v-model="to" 
+        name="to">
+        <option 
+          v-for="participant in participants" 
+          :key="participant.id" 
+          :value="participant.id">{{ participant.firstName }}</option>
       </select>
     </div>
     <div>
-      Total: <input type="number" name="amount" v-model.number="amount">
+      Total: <input 
+        v-model.number="amount" 
+        type="number" 
+        name="amount">
     </div>
    
     <div> 
-      Comment: <input type="text" name="comment" v-model="comment">
+      Comment: <input 
+        v-model="comment" 
+        type="text" 
+        name="comment">
     </div>
     <button type="submit">OK</button>
   </form>
