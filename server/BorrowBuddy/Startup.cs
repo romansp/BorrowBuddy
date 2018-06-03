@@ -17,7 +17,14 @@ namespace BorrowBuddy {
 
     public void ConfigureServices(IServiceCollection services) {
       services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-      services.AddCors();
+      services.AddCors(options =>
+      {
+        options.AddPolicy("CorsPolicy",
+            builder => builder.AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .AllowCredentials());
+      });
 
       services.AddDbContextPool<BorrowBuddyContext>(options => options
               .UseLazyLoadingProxies()
@@ -31,16 +38,11 @@ namespace BorrowBuddy {
     public void Configure(IApplicationBuilder app, IHostingEnvironment env) {
       if(env.IsDevelopment()) {
         app.UseDeveloperExceptionPage();
-        app.UseCors(builder =>
-        builder.AllowAnyOrigin()
-          .AllowAnyMethod()
-          .AllowAnyHeader()
-          .AllowCredentials()
-        );
       } else {
         app.UseHsts();
       }
       app.UseHttpsRedirection();
+      app.UseCors("CorsPolicy");
       app.UseMvc();
       app.UseSwagger();
       app.UseSwaggerUI(c => {

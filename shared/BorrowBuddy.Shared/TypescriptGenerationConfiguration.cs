@@ -1,4 +1,5 @@
 using BorrowBuddy.Domain;
+using BorrowBuddy.Models.Requests;
 using Reinforced.Typings.Fluent;
 
 namespace BorrowBuddy.Shared {
@@ -8,6 +9,7 @@ namespace BorrowBuddy.Shared {
 
       builder.AddTypeSubsitutes();
       builder.AddExports(typeof(Participant));
+      builder.AddExports(typeof(FlowPost));
     }
   }
 }

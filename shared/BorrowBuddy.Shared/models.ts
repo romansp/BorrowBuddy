@@ -31,3 +31,10 @@ export interface Participant
   lended: Flow[];
   borrowed: Flow[];
 }
+export interface FlowPost
+{
+  amount: number;
+  comment: string;
+  to: string;
+  from: string;
+}

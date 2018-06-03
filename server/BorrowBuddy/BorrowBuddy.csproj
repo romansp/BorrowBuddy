@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BorrowBuddy.Domain\BorrowBuddy.Domain.csproj" />
+    <ProjectReference Include="..\BorrowBuddy.Models\BorrowBuddy.Models.csproj" />
   </ItemGroup>
 
 </Project>

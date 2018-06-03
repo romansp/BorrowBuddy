@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using BorrowBuddy.Data;
 using BorrowBuddy.Domain;
 using System;
+using BorrowBuddy.Models.Requests;
 
 namespace BorrowBuddy.Controllers {
 
@@ -56,7 +57,7 @@ namespace BorrowBuddy.Controllers {
 
     [HttpPost]
     [ProducesResponseType(201)]
-    public async Task<ActionResult<Flow>> PostFlow(Models.Requests.FlowPost flowPost) {
+    public async Task<ActionResult<Flow>> PostFlow(FlowPost flowPost) {
       var flow = new Flow() {
         Amount = new Money() {
           Value = flowPost.Amount,
@@ -64,8 +65,8 @@ namespace BorrowBuddy.Controllers {
         },
         Comment = flowPost.Comment,
         Timestamp = DateTimeOffset.UtcNow,
-        Lendee = await _context.Participants.FirstOrDefaultAsync(c => c.Id == flowPost.LendeeId),
-        Lender = await _context.Participants.FirstOrDefaultAsync(c => c.Id == flowPost.LenderId)
+        Lendee = await _context.Participants.FirstOrDefaultAsync(c => c.Id == flowPost.To),
+        Lender = await _context.Participants.FirstOrDefaultAsync(c => c.Id == flowPost.From)
       };
       _context.Flows.Add(flow);
       await _context.SaveChangesAsync();

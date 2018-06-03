@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\server\BorrowBuddy.Domain\BorrowBuddy.Domain.csproj" />
+    <ProjectReference Include="..\..\server\BorrowBuddy.Models\BorrowBuddy.Models.csproj" />
   </ItemGroup>
 
 </Project>
