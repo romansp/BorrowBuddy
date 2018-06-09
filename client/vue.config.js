@@ -1,13 +1,11 @@
-const fs = require('fs');
-
 module.exports = {
   pwa: {
-    name: 'Borrow Buddy'
+    name: "Borrow Buddy"
   },
   css: {
     loaderOptions: {
       sass: {
-        data: fs.readFileSync('src/scss/app/_variables.scss')
+        data: "@import 'src/scss/app/_variables.scss';"
       }
     }
   }

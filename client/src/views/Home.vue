@@ -6,13 +6,11 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-import BAddFlow from '@/components/BAddFlow.vue';
-
-@Component({
+import BAddFlow from "@/components/BAddFlow.vue";
+import Vue from "vue";
+export default Vue.extend({
   components: {
     BAddFlow
   }
-})
-export default class Home extends Vue {}
+});
 </script>

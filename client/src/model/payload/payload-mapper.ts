@@ -1,9 +1,9 @@
-import { AxiosError, AxiosResponse } from 'axios';
-import { IPayloadMessage } from './payload-message';
-import { PayloadMessageTypes } from '../../common/message';
-import { IPayload } from './index';
+import { AxiosError, AxiosResponse } from "axios";
+import { PayloadMessageTypes } from "../../common/message";
+import { IPayload } from "./index";
+import { IPayloadMessage } from "./payload-message";
 
-export { PayloadMessageTypes } from '../../common/message';
+export { PayloadMessageTypes } from "../../common/message";
 
 export class PayloadMapper {
   public fromObject<T>(o: any): IPayload<T> {
@@ -19,7 +19,7 @@ export class PayloadMapper {
       return this.fromAxiosResponse<T>(o);
     }
 
-    throw new Error(`Couldn't map response payload.`);
+    throw new Error("Couldn't map response payload.");
   }
 
   private fromError<T>(o: Error): IPayload<T> {
@@ -43,7 +43,7 @@ export class PayloadMapper {
       message: {
         messageTypeId: PayloadMessageTypes.error,
         text: o.message,
-        title: 'Code:' + o.code + '. ' + o.name
+        title: "Code:" + o.code + ". " + o.name
       }
     };
   }
@@ -68,18 +68,18 @@ export class PayloadMapper {
 function isAxiosResponse(o: any): o is AxiosResponse {
   return (
     o instanceof Object &&
-    'data' in o &&
-    'config' in o &&
-    'status' in o &&
-    'statusText' in o &&
-    'headers' in o
+    "data" in o &&
+    "config" in o &&
+    "status" in o &&
+    "statusText" in o &&
+    "headers" in o
   );
 }
 
 function isAxiosError(o: any): o is AxiosError {
-  return o instanceof Object && o instanceof Error && 'config' in o;
+  return o instanceof Object && o instanceof Error && "config" in o;
 }
 
 function isPayload<T>(o: any): o is IPayload<T> {
-  return o instanceof Object && 'data' in o && 'message' in o;
+  return o instanceof Object && "data" in o && "message" in o;
 }

@@ -1,20 +1,18 @@
 {
   "defaultSeverity": "warning",
-  "extends": ["tslint:recommended", "tslint-config-prettier"],
+  "extends": ["tslint:recommended"],
   "linterOptions": {
     "exclude": ["node_modules/**"]
   },
   "rules": {
     "arrow-parens": [true, "ban-single-arg-parens"],
     "curly": [true, "ignore-same-line"],
-    "quotemark": [true, "single"],
+    "quotemark": [true, "double"],
     "indent": [true, "spaces", 2],
     "interface-name": false,
-    "ordered-imports": false,
+    "ordered-imports": true,
     "object-literal-sort-keys": false,
-    "no-consecutive-blank-lines": false,
-    "trailing-comma": false,
-    "prettier": true
-  },
-  "rulesDirectory": ["tslint-plugin-prettier"]
+    "no-consecutive-blank-lines": true,
+    "trailing-comma": false
+  }
 }

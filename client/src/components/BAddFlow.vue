@@ -41,16 +41,16 @@
 
 
 <script lang="ts">
-import Vue from 'vue';
-import { mapState } from 'vuex';
-import { FlowsService } from '../services/flows.service';
+import Vue from "vue";
+import { mapState } from "vuex";
+import { FlowsService } from "../services/flows.service";
 export default Vue.extend({
   data() {
     return {
       amount: 0,
-      from: '',
-      to: '',
-      comment: ''
+      from: "",
+      to: "",
+      comment: ""
     };
   },
 
@@ -59,7 +59,7 @@ export default Vue.extend({
   }),
 
   async mounted() {
-    await this.$store.dispatch('PARTICIPANTS_FETCH');
+    await this.$store.dispatch("PARTICIPANTS_FETCH");
   },
 
   methods: {

@@ -6,9 +6,22 @@
     "**/CVS": true,
     "**/.DS_Store": true,
     "**/*.map": true,
-    "**/node_modules": true
+    "**/.vs": true,
+    "**/node_modules": true,
   },
   "typescript.tsdk": "client/node_modules/typescript/lib",
+  "typescript.preferences.quoteStyle": "double",
   "editor.formatOnSave": true,
-  "prettier.ignorePath": ".prettierignore"
+  "eslint.autoFixOnSave": true,
+  "tslint.autoFixOnSave": true,
+  "eslint.validate": [
+    {
+      "language": "vue",
+      "autoFix": true
+    },
+    {
+      "language": "typescript",
+      "autoFix": true
+    }
+  ]
 }
