@@ -5,6 +5,7 @@ namespace BorrowBuddy.Domain {
     public Flow() {
       Id = Guid.NewGuid();
     }
+
     public Guid Id { get; set; }
     public virtual Participant Lender { get; set; }
     public virtual Participant Lendee { get; set; }

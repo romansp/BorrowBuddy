@@ -1,14 +1,13 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using BorrowBuddy.Data;
 using BorrowBuddy.Domain;
-using System;
 using BorrowBuddy.Models.Requests;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace BorrowBuddy.Controllers {
-
   [ApiController]
   [Route("api/[controller]")]
   public class FlowsController : ControllerBase {
@@ -45,11 +44,11 @@ namespace BorrowBuddy.Controllers {
       try {
         await _context.SaveChangesAsync();
       } catch (DbUpdateConcurrencyException) {
-        if (!(await FlowExistsAsync(id))) {
+        if (!await FlowExistsAsync(id)) {
           return NotFound();
-        } else {
-          throw;
         }
+
+        throw;
       }
 
       return NoContent();
@@ -58,8 +57,8 @@ namespace BorrowBuddy.Controllers {
     [HttpPost]
     [ProducesResponseType(201)]
     public async Task<ActionResult<Flow>> PostFlow(FlowPost flowPost) {
-      var flow = new Flow() {
-        Amount = new Money() {
+      var flow = new Flow {
+        Amount = new Money {
           Value = flowPost.Amount,
           Currency = await _context.Currencies.FirstAsync(c => c.Code == "BYN")
         },

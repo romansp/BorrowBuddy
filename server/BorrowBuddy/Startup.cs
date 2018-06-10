@@ -30,9 +30,7 @@ namespace BorrowBuddy {
               .UseLazyLoadingProxies()
               .UseSqlServer(Configuration.GetConnectionString("BorrowBuddyContext")));
 
-      services.AddSwaggerGen(c => {
-        c.SwaggerDoc("api", new Info { Title = "BorrowBuddy" });
-      });
+      services.AddSwaggerGen(c => c.SwaggerDoc("api", new Info { Title = "BorrowBuddy" }));
     }
 
     public void Configure(IApplicationBuilder app, IHostingEnvironment env) {
@@ -45,9 +43,7 @@ namespace BorrowBuddy {
       app.UseCors("CorsPolicy");
       app.UseMvc();
       app.UseSwagger();
-      app.UseSwaggerUI(c => {
-        c.SwaggerEndpoint("/swagger/api/swagger.json", "BorrowBuddy");
-      });
+      app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/api/swagger.json", "BorrowBuddy"));
 
     }
   }

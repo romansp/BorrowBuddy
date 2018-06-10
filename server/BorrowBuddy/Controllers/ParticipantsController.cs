@@ -1,10 +1,10 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using BorrowBuddy.Data;
+using BorrowBuddy.Domain;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using BorrowBuddy.Domain;
-using System;
 
 namespace BorrowBuddy.Controllers {
 
@@ -44,11 +44,11 @@ namespace BorrowBuddy.Controllers {
       try {
         await _context.SaveChangesAsync();
       } catch (DbUpdateConcurrencyException) {
-        if (!(await ParticipantExistsAsync(id))) {
+        if (!await ParticipantExistsAsync(id)) {
           return NotFound();
-        } else {
-          throw;
         }
+
+        throw;
       }
 
       return NoContent();

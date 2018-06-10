@@ -4,7 +4,7 @@ using BorrowBuddy.Domain;
 namespace BorrowBuddy.Data {
   public class BorrowBuddyContext : DbContext {
 
-    public BorrowBuddyContext(DbContextOptions options)
+    public BorrowBuddyContext(DbContextOptions<BorrowBuddyContext> options)
         : base(options) {
     }
 
@@ -18,6 +18,12 @@ namespace BorrowBuddy.Data {
       modelBuilder.ApplyConfiguration(new Configuration.Currency());
 
       base.OnModelCreating(modelBuilder);
+    }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
+      if(!optionsBuilder.IsConfigured) {
+        optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EFProviders.InMemory;Trusted_Connection=True;ConnectRetryCount=0");
+      }
     }
   }
 }
