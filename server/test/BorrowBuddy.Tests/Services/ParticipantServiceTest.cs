@@ -9,11 +9,11 @@ using Xunit;
 
 namespace BorrowBuddy.Test.Services {
 
-  public class ParticipantServiceTest {
+  public class ParticipantServiceTest : ServiceTestBase {
     [Fact]
     public async Task Get() {
       // Arrange
-      var options = Extensions.СontextOptions();
+      var options = BuildContextOptions();
       var participant = new Participant();
       using(var context = new BorrowBuddyContext(options)) {
         context.Participants.Add(participant);
@@ -33,7 +33,7 @@ namespace BorrowBuddy.Test.Services {
     [Fact]
     public async Task Get_NotExisting_ReturnsNull() {
       // Arrange
-      var options = Extensions.СontextOptions();
+      var options = BuildContextOptions();
 
       using(var context = new BorrowBuddyContext(options)) {
         // Act
@@ -48,7 +48,7 @@ namespace BorrowBuddy.Test.Services {
     [Fact]
     public void Add() {
       // Arrange
-      var options = Extensions.СontextOptions();
+      var options = BuildContextOptions();
 
       using(var context = new BorrowBuddyContext(options)) {
         // Act

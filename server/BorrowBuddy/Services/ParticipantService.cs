@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using BorrowBuddy.Data;
 using BorrowBuddy.Domain;
@@ -11,6 +12,10 @@ namespace BorrowBuddy.Services {
 
     public ParticipantService(BorrowBuddyContext context) {
       _context = context;
+    }
+
+    public Task<List<Participant>> GetAsync() {
+      return _context.Participants.ToListAsync();
     }
 
     public Task<Participant> GetAsync(Guid id) {

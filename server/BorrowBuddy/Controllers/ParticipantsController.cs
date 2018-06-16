@@ -1,83 +1,42 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
-using BorrowBuddy.Data;
-using BorrowBuddy.Domain;
+using BorrowBuddy.Responses;
+using BorrowBuddy.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace BorrowBuddy.Controllers {
-
   [ApiController]
   [Route("api/[controller]")]
   public class ParticipantsController : ControllerBase {
-    private readonly BorrowBuddyContext _context;
+    private readonly ParticipantService _participantService;
+    private readonly BalanceService _balanceService;
 
-    public ParticipantsController(BorrowBuddyContext context) {
-      _context = context;
+    public ParticipantsController(ParticipantService participantService, BalanceService balanceService) {
+      _balanceService = balanceService;
+      _participantService = participantService;
     }
 
     [HttpGet]
-    public ActionResult<IEnumerable<Participant>> GetParticipant() {
-      return _context.Participants;
+    public async Task<ActionResult<IEnumerable<Participant>>> GetParticipantAsync() {
+      return (await _participantService.GetAsync()).Select(Model.Map).ToList();
     }
 
     [HttpGet("{id}")]
     public async Task<ActionResult<Participant>> GetParticipant(Guid id) {
-      var participant = await _context.Participants.FirstOrDefaultAsync(m => m.Id == id);
+      var participant = await _participantService.GetAsync(id);
 
-      if (participant == null) {
+      if(participant == null) {
         return NotFound();
       }
 
-      return participant;
+      return Model.Map(participant);
     }
 
-    [HttpPut("{id}")]
-    public async Task<IActionResult> PutParticipant([FromRoute] Guid id, [FromBody] Participant participant) {
-      if (id != participant.Id) {
-        return BadRequest();
-      }
-
-      _context.Entry(participant).State = EntityState.Modified;
-
-      try {
-        await _context.SaveChangesAsync();
-      } catch (DbUpdateConcurrencyException) {
-        if (!await ParticipantExistsAsync(id)) {
-          return NotFound();
-        }
-
-        throw;
-      }
-
-      return NoContent();
-    }
-
-    [HttpPost]
-    [ProducesResponseType(201)]
-    public async Task<ActionResult<Participant>> PostParticipant(Participant participant) {
-      _context.Participants.Add(participant);
-      await _context.SaveChangesAsync();
-
-      return CreatedAtAction(nameof(GetParticipant), new { id = participant.Id }, participant);
-    }
-
-    [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteParticipant(Guid id) {
-      var participant = await _context.Participants.FirstOrDefaultAsync(m => m.Id == id);
-      if (participant == null) {
-        return NotFound();
-      }
-
-      _context.Participants.Remove(participant);
-      await _context.SaveChangesAsync();
-
-      return NoContent();
-    }
-
-    private Task<bool> ParticipantExistsAsync(Guid id) {
-      return _context.Participants.AnyAsync(e => e.Id == id);
+    [HttpGet("{from}/balance/{to}")]
+    public async Task<ActionResult<long>> BalanceAsync(Guid from, Guid to) {
+      return await _balanceService.BalanceAsync(from, to);
     }
   }
 }

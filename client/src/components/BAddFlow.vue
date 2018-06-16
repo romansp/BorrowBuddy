@@ -23,12 +23,21 @@
       </select>
     </div>
     <div>
+      <button 
+        type="button" 
+        @click="swap">Swap</button>
+    </div>
+    <div>
       Total: <input 
         v-model.number="amount" 
         type="number" 
         name="amount">
     </div>
-   
+    <div>
+      <BbBalance 
+        :from="from" 
+        :to="to" />
+    </div>
     <div> 
       Comment: <input 
         v-model="comment" 
@@ -43,8 +52,15 @@
 <script lang="ts">
 import Vue from "vue";
 import { mapState } from "vuex";
+
 import { FlowsService } from "../services/flows.service";
+import BbBalance from "./BbBalance.vue";
+
 export default Vue.extend({
+  components: {
+    BbBalance
+  },
+
   data() {
     return {
       amount: 0,
@@ -71,6 +87,11 @@ export default Vue.extend({
         to,
         comment
       });
+    },
+    swap() {
+      const temp = this.from;
+      this.from = this.to;
+      this.to = temp;
     }
   }
 });

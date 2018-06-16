@@ -2,8 +2,7 @@ import axios from "axios";
 import { IPayload, PayloadMapper, PayloadMessageTypes } from "../model";
 
 export const server = axios.create({
-  baseURL: "https://localhost:44347/api/",
-  timeout: 1000
+  baseURL: "https://localhost:44347/api/"
 });
 
 export function exec<T>(cb: Promise<{}>): Promise<T> {
@@ -28,7 +27,7 @@ function processPayload<T>(
   if (messageTypeId) {
     return Promise.reject(message);
   }
-  if (payload.data) {
+  if (payload.data !== undefined) {
     return Promise.resolve(payload.data);
   }
   throw new Error("Couldn't extract response data.");

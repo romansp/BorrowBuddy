@@ -10,11 +10,11 @@ using Xunit;
 
 namespace BorrowBuddy.Test.Services {
 
-  public class FlowServiceTest {
+  public class FlowServiceTest : ServiceTestBase {
     [Fact]
     public async Task Add() {
       // Arrange
-      var options = Extensions.СontextOptions();
+      var options = BuildContextOptions();
       var currency = new Currency() {
         Code = "BYN"
       };

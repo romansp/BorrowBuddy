@@ -1,55 +1,52 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
-using BorrowBuddy.Data;
-using BorrowBuddy.Domain;
 using BorrowBuddy.Models.Requests;
+using BorrowBuddy.Responses;
+using BorrowBuddy.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace BorrowBuddy.Controllers {
   [ApiController]
   [Route("api/[controller]")]
   public class FlowsController : ControllerBase {
-    private readonly BorrowBuddyContext _context;
+    private readonly FlowService _flowService;
 
-    public FlowsController(BorrowBuddyContext context) {
-      _context = context;
+    public FlowsController(FlowService flowService) {
+      _flowService = flowService;
     }
 
     [HttpGet]
-    public ActionResult<IEnumerable<Flow>> GetFlows() {
-      return _context.Flows;
+    public async Task<ActionResult<IEnumerable<Flow>>> GetFlowsAsync() {
+      return (await _flowService.GetAsync()).Select(Model.Map).ToList();
     }
 
     [HttpGet("{id}")]
     public async Task<ActionResult<Flow>> GetFlow(Guid id) {
-      var flow = await _context.Flows.FirstOrDefaultAsync(m => m.Id == id);
+      var flow = await _flowService.GetAsync(id);
 
       if (flow == null) {
         return NotFound();
       }
 
-      return Ok(flow);
+      return Ok(Model.Map(flow));
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> PutFlow([FromRoute] Guid id, [FromBody] Flow flow) {
-      if (id != flow.Id) {
-        return BadRequest();
+    public async Task<IActionResult> PutFlow([FromRoute] Guid id, [FromBody] FlowPost flowPut) {
+      if(!await FlowExistsAsync(id)) {
+        return NotFound();
       }
 
-      _context.Entry(flow).State = EntityState.Modified;
-
-      try {
-        await _context.SaveChangesAsync();
-      } catch (DbUpdateConcurrencyException) {
-        if (!await FlowExistsAsync(id)) {
-          return NotFound();
-        }
-
-        throw;
-      }
+      var flow = _flowService.UpdateAsync(id,
+        new Dto.FlowDto() {
+          Amount = flowPut.Amount,
+          Code = "BYN",
+          LenderId = flowPut.From,
+          LendeeId = flowPut.To,
+          Comment = flowPut.Comment,
+        });
 
       return NoContent();
     }
@@ -57,37 +54,29 @@ namespace BorrowBuddy.Controllers {
     [HttpPost]
     [ProducesResponseType(201)]
     public async Task<ActionResult<Flow>> PostFlow(FlowPost flowPost) {
-      var flow = new Flow {
-        Amount = new Money {
-          Value = flowPost.Amount,
-          Currency = await _context.Currencies.FirstAsync(c => c.Code == "BYN")
-        },
+      var flow = await _flowService.AddAsync(new Dto.FlowDto() {
+        Amount = flowPost.Amount,
+        Code = "BYN",
+        LenderId = flowPost.From,
+        LendeeId = flowPost.To,
         Comment = flowPost.Comment,
-        Timestamp = DateTimeOffset.UtcNow,
-        Lendee = await _context.Participants.FirstOrDefaultAsync(c => c.Id == flowPost.To),
-        Lender = await _context.Participants.FirstOrDefaultAsync(c => c.Id == flowPost.From)
-      };
-      _context.Flows.Add(flow);
-      await _context.SaveChangesAsync();
+      });
 
-      return CreatedAtAction(nameof(GetFlow), new { id = flow.Id }, flow);
+      return CreatedAtAction(nameof(GetFlow), new { id = flow.Id }, Model.Map(flow));
     }
 
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteFlow(Guid id) {
-      var flow = await _context.Flows.FirstOrDefaultAsync(m => m.Id == id);
-      if (flow == null) {
+      if(!await FlowExistsAsync(id)) {
         return NotFound();
       }
 
-      _context.Flows.Remove(flow);
-      await _context.SaveChangesAsync();
-
+      await _flowService.DeleteAsync(id);
       return NoContent();
     }
 
-    private Task<bool> FlowExistsAsync(Guid id) {
-      return _context.Flows.AnyAsync(e => e.Id == id);
+    private async Task<bool> FlowExistsAsync(Guid id) {
+      return (await _flowService.GetAsync(id)) != null;
     }
   }
 

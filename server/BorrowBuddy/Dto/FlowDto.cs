@@ -5,7 +5,7 @@ namespace BorrowBuddy.Dto {
     public Guid LenderId { get; set; }
     public Guid LendeeId { get; set; }
     public string Code { get; set; }
-    public int Amount { get; set; }
+    public long Amount { get; set; }
     public string Comment { get; set; }
   }
 }
