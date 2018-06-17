@@ -19,5 +19,13 @@ namespace BorrowBuddy.Responses {
         MiddleName = p.MiddleName
       };
     }
+
+    public static Currency Map(Domain.Currency c) {
+      return new Currency() {
+        Code = c.Code,
+        Scale = c.Scale,
+        Symbol = c.Symbol
+      };
+    }
   }
 }

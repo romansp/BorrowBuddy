@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using BorrowBuddy.Data;
 using BorrowBuddy.Domain;
@@ -12,6 +13,10 @@ namespace BorrowBuddy.Services {
       _context = context;
     }
 
+    public Task<List<Currency>> GetAsync() {
+      return _context.Currencies.ToListAsync();
+    }
+
     public Task<Currency> GetAsync(string code) {
       if(code == null)
         throw new System.ArgumentNullException(nameof(code));
@@ -19,14 +24,31 @@ namespace BorrowBuddy.Services {
       return _context.Currencies.FirstOrDefaultAsync(c => c.Code == code);
     }
 
-    public Task AddAsync(CurrencyDto dto) {
-      _context.Currencies.Add(new Currency() {
+    public async Task<Currency> AddAsync(CurrencyDto dto) {
+      var currency = new Currency() {
         Code = dto.Code,
         Scale = dto.Scale,
         Symbol = dto.Symbol
-      });
+      };
 
-      return _context.SaveChangesAsync();
+      _context.Currencies.Add(currency);
+
+      await _context.SaveChangesAsync();
+      return currency;
+    }
+
+    public async Task<Currency> UpdateAsync(string code, CurrencyDto dto) {
+      var currency = await GetAsync(code);
+      currency.Symbol = dto.Symbol;
+      currency.Scale = dto.Scale;
+      await _context.SaveChangesAsync();
+      return currency;
+    }
+
+    public async Task DeleteAsync(string code) {
+      var currency = await GetAsync(code);
+      _context.Currencies.Remove(currency);
+      await _context.SaveChangesAsync();
     }
   }
 }

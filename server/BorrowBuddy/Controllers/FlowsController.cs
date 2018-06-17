@@ -18,7 +18,7 @@ namespace BorrowBuddy.Controllers {
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Flow>>> GetFlowsAsync() {
+    public async Task<ActionResult<IEnumerable<Flow>>> GetFlows() {
       return (await _flowService.GetAsync()).Select(Model.Map).ToList();
     }
 

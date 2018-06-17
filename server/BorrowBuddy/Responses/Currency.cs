@@ -1,0 +1,7 @@
+namespace BorrowBuddy.Responses {
+  public class Currency {
+    public string Code { get; set; }
+    public string Symbol { get; set; }
+    public int Scale { get; set; }
+  }
+}
