@@ -1,12 +1,12 @@
 using BorrowBuddy.Data;
+using BorrowBuddy.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.EntityFrameworkCore;
 using Swashbuckle.AspNetCore.Swagger;
-using BorrowBuddy.Services;
 
 namespace BorrowBuddy
 {
@@ -57,7 +57,6 @@ namespace BorrowBuddy
             app.UseMvc();
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/api/swagger.json", "BorrowBuddy"));
-
         }
     }
 }

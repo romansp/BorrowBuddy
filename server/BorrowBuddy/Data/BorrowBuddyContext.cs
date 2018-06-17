@@ -1,9 +1,8 @@
-using Microsoft.EntityFrameworkCore;
 using BorrowBuddy.Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace BorrowBuddy.Data {
   public class BorrowBuddyContext : DbContext {
-
     public BorrowBuddyContext(DbContextOptions<BorrowBuddyContext> options)
         : base(options) {
     }

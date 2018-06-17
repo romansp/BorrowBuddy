@@ -7,7 +7,6 @@ using BorrowBuddy.Dto;
 using Microsoft.EntityFrameworkCore;
 
 namespace BorrowBuddy.Services {
-
   public class FlowService {
     private readonly BorrowBuddyContext _context;
 
@@ -26,14 +25,14 @@ namespace BorrowBuddy.Services {
     public async Task<Flow> AddAsync(FlowDto dto) {
       var lendee = await _context.Participants.FirstOrDefaultAsync(c => c.Id == dto.LendeeId);
       var lender = await _context.Participants.FirstOrDefaultAsync(c => c.Id == dto.LenderId);
-      var currency = await _context.Currencies.FirstOrDefaultAsync(c => c.Code == dto.Code);
+      var currency = await _context.Currencies.FirstOrDefaultAsync(c => c.Code == dto.CurrencyCode);
 
       var flow = new Flow {
         Lendee = lendee,
         Lender = lender,
         Comment = dto.Comment,
         Timestamp = DateTimeOffset.UtcNow,
-        Amount = new Money() {
+        Amount = new Money {
           Currency = currency,
           Value = dto.Amount
         }
@@ -47,12 +46,12 @@ namespace BorrowBuddy.Services {
       var flow = await GetAsync(id);
       var lendee = await _context.Participants.FirstOrDefaultAsync(c => c.Id == dto.LendeeId);
       var lender = await _context.Participants.FirstOrDefaultAsync(c => c.Id == dto.LenderId);
-      var currency = await _context.Currencies.FirstOrDefaultAsync(c => c.Code == dto.Code);
+      var currency = await _context.Currencies.FirstOrDefaultAsync(c => c.Code == dto.CurrencyCode);
 
       flow.Lendee = lendee;
       flow.Lender = lender;
       flow.Comment = dto.Comment;
-      flow.Amount = new Money() {
+      flow.Amount = new Money {
         Currency = currency,
         Value = dto.Amount
       };

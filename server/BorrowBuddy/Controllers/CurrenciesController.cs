@@ -1,8 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BorrowBuddy.Models.Requests;
-using BorrowBuddy.Responses;
+using BorrowBuddy.Dto;
+using BorrowBuddy.Models;
+using BorrowBuddy.Models.Resources;
 using BorrowBuddy.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,7 +11,6 @@ namespace BorrowBuddy.Controllers {
   [ApiController]
   [Route("api/[controller]")]
   public class CurrenciesController : ControllerBase {
-
     private readonly CurrencyService _currencyService;
 
     public CurrenciesController(CurrencyService currencyService) {
@@ -19,7 +19,7 @@ namespace BorrowBuddy.Controllers {
 
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Currency>>> GetCurrency() {
-      return (await _currencyService.GetAsync()).Select(Model.Map).ToList();
+      return (await _currencyService.GetAsync()).Select(Mapper.Map).ToList();
     }
 
     [HttpGet("{code}")]
@@ -30,7 +30,7 @@ namespace BorrowBuddy.Controllers {
         return NotFound();
       }
 
-      return Model.Map(currency);
+      return Mapper.Map(currency);
     }
 
     [HttpPut("{code}")]
@@ -44,7 +44,7 @@ namespace BorrowBuddy.Controllers {
       }
 
       var flow = _currencyService.UpdateAsync(code,
-        new Dto.CurrencyDto() {
+        new CurrencyDto {
           Code = model.Code,
           Scale = model.Scale,
           Symbol = model.Symbol
@@ -56,13 +56,13 @@ namespace BorrowBuddy.Controllers {
     [HttpPost]
     [ProducesResponseType(201)]
     public async Task<ActionResult<Flow>> PostCurrency(Currency model) {
-      var currency = await _currencyService.AddAsync(new Dto.CurrencyDto() {
+      var currency = await _currencyService.AddAsync(new CurrencyDto {
         Code = model.Code,
         Scale = model.Scale,
         Symbol = model.Symbol
       });
 
-      return CreatedAtAction(nameof(GetCurrency), new { id = currency.Code }, Model.Map(currency));
+      return CreatedAtAction(nameof(GetCurrency), new { code = currency.Code }, Mapper.Map(currency));
     }
 
     [HttpDelete("{code}")]

@@ -1,4 +1,3 @@
-using System.Linq;
 using System.Threading.Tasks;
 using BorrowBuddy.Data;
 using BorrowBuddy.Domain;
@@ -18,8 +17,8 @@ namespace BorrowBuddy.Test.Services {
         var currency = context.AddCurrency();
         from = context.AddParticipant();
         to = context.AddParticipant();
-        context.Addlow(from, to, currency, 50);
-        context.Addlow(from, to, currency, 100);
+        context.AddFlow(from, to, currency, 50);
+        context.AddFlow(from, to, currency, 100);
       }
 
       using(var context = new BorrowBuddyContext(options)) {
@@ -43,7 +42,7 @@ namespace BorrowBuddy.Test.Services {
         var currency = context.AddCurrency();
         from = context.AddParticipant();
         to = context.AddParticipant();
-        context.Addlow(from, to, currency, 50);
+        context.AddFlow(from, to, currency, 50);
       }
 
       using(var context = new BorrowBuddyContext(options)) {

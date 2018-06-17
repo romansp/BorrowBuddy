@@ -4,7 +4,7 @@
 
 
 <script lang="ts">
-import ParticipantsService from "@/services/participants.service";
+import { balance } from "@/services/participants.service";
 import Vue from "vue";
 export default Vue.extend({
   props: {
@@ -37,7 +37,7 @@ export default Vue.extend({
   methods: {
     async updateBalance() {
       if (this.from && this.to) {
-        this.balance = await ParticipantsService.balance(this.from, this.to);
+        this.balance = await balance(this.from, this.to);
       }
     }
   }

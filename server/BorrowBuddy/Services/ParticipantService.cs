@@ -22,14 +22,32 @@ namespace BorrowBuddy.Services {
       return _context.Participants.FirstOrDefaultAsync(c => c.Id == id);
     }
 
-    public Task AddAsync(ParticipantDto dto) {
-      _context.Participants.Add(new Participant {
+    public async Task<Participant> AddAsync(ParticipantDto dto) {
+      var participant = new Participant {
         FirstName = dto.FirstName,
         LastName = dto.LastName,
         MiddleName = dto.MiddleName
-      });
+      };
+      _context.Participants.Add(participant);
 
-      return _context.SaveChangesAsync();
+      await _context.SaveChangesAsync();
+      return participant;
+    }
+
+    public async Task<Participant> UpdateAsync(Guid id, ParticipantDto dto) {
+      var participant = await GetAsync(id);
+      participant.FirstName = dto.FirstName;
+      participant.MiddleName = dto.MiddleName;
+      participant.LastName = dto.LastName;
+
+      await _context.SaveChangesAsync();
+      return participant;
+    }
+
+    public async Task DeleteAsync(Guid id) {
+      var participant = await GetAsync(id);
+      _context.Participants.Remove(participant);
+      await _context.SaveChangesAsync();
     }
   }
 }

@@ -1,5 +1,5 @@
-using BorrowBuddy.Domain;
 using BorrowBuddy.Models.Requests;
+using BorrowBuddy.Models.Resources;
 using Reinforced.Typings.Fluent;
 
 namespace BorrowBuddy.Shared {

@@ -34,7 +34,7 @@
         name="amount">
     </div>
     <div>
-      <BbBalance 
+      <Balance 
         :from="from" 
         :to="to" />
     </div>
@@ -53,12 +53,12 @@
 import Vue from "vue";
 import { mapState } from "vuex";
 
-import { FlowsService } from "../services/flows.service";
-import BbBalance from "./BbBalance.vue";
+import { add, getAll } from "../services/flows.service";
+import Balance from "./Balance.vue";
 
 export default Vue.extend({
   components: {
-    BbBalance
+    Balance
   },
 
   data() {
@@ -81,11 +81,12 @@ export default Vue.extend({
   methods: {
     async submit() {
       const { amount, from, to, comment } = this;
-      await FlowsService.post({
+      await add({
         amount,
-        from,
-        to,
-        comment
+        lender: from,
+        lendee: to,
+        comment,
+        currencyCode: "BYN"
       });
     },
     swap() {

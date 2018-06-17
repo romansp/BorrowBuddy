@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import ParticipantsService from "./services/participants.service";
+import { getAll } from "./services/participants.service";
 
 Vue.use(Vuex);
 
@@ -15,7 +15,7 @@ export default new Vuex.Store({
   },
   actions: {
     async ["PARTICIPANTS_FETCH"]({ commit }) {
-      commit("PARTICIPANTS_SET", await ParticipantsService.getAll());
+      commit("PARTICIPANTS_SET", await getAll());
     }
   }
 });

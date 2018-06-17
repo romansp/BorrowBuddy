@@ -1,16 +1,17 @@
 <template>
-  <div class="home">
-    <img src="../assets/logo.png">
-    <FlowAdd />
+  <div>
+    <ParticipantAdd />
   </div>
 </template>
 
 <script lang="ts">
-import FlowAdd from "@/components/FlowAdd.vue";
 import Vue from "vue";
+
+import ParticipantAdd from "@/components/ParticipantAdd.vue";
+
 export default Vue.extend({
   components: {
-    FlowAdd
+    ParticipantAdd
   }
 });
 </script>

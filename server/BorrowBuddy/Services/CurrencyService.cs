@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using BorrowBuddy.Data;
@@ -19,13 +20,13 @@ namespace BorrowBuddy.Services {
 
     public Task<Currency> GetAsync(string code) {
       if(code == null)
-        throw new System.ArgumentNullException(nameof(code));
+        throw new ArgumentNullException(nameof(code));
 
       return _context.Currencies.FirstOrDefaultAsync(c => c.Code == code);
     }
 
     public async Task<Currency> AddAsync(CurrencyDto dto) {
-      var currency = new Currency() {
+      var currency = new Currency {
         Code = dto.Code,
         Scale = dto.Scale,
         Symbol = dto.Symbol

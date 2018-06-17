@@ -11,16 +11,13 @@ export interface Currency
 export interface Flow
 {
   id: string;
-  lender: Participant;
-  lendee: Participant;
-  amount: Money;
+  lender: string;
+  lendee: string;
+  amount: number;
+  currencyCode: string;
+  currencyScale: number;
   comment: string;
   timestamp: string;
-}
-export interface Money
-{
-  value: number;
-  currency: Currency;
 }
 export interface Participant
 {
@@ -28,13 +25,18 @@ export interface Participant
   firstName: string;
   middleName: string;
   lastName: string;
-  lended: Flow[];
-  borrowed: Flow[];
 }
 export interface FlowPost
 {
+  lender: string;
+  lendee: string;
   amount: number;
+  currencyCode: string;
   comment: string;
-  to: string;
-  from: string;
+}
+export interface ParticipantPost
+{
+  firstName: string;
+  middleName: string;
+  lastName: string;
 }

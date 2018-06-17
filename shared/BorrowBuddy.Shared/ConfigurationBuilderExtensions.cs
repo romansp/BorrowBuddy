@@ -1,13 +1,12 @@
-using Reinforced.Typings.Ast.TypeNames;
-using Reinforced.Typings.Fluent;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Reinforced.Typings.Ast.TypeNames;
+using Reinforced.Typings.Fluent;
 
 namespace BorrowBuddy.Shared {
   internal static class ConfigurationBuilderExtensions {
-
     private static readonly Dictionary<Type, RtTypeName> _typeSubstitutes = new Dictionary<Type, RtTypeName> {
       { typeof(DateTimeOffset), new RtSimpleTypeName("string") },
       { typeof(Guid), new RtSimpleTypeName("string") }

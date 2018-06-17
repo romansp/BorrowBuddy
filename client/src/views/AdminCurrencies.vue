@@ -1,16 +1,17 @@
 <template>
-  <div class="home">
-    <img src="../assets/logo.png">
-    <FlowAdd />
+  <div>
+    <CurrencyAdd />
   </div>
 </template>
 
 <script lang="ts">
-import FlowAdd from "@/components/FlowAdd.vue";
 import Vue from "vue";
+
+import CurrencyAdd from "@/components/CurrencyAdd.vue";
+
 export default Vue.extend({
   components: {
-    FlowAdd
+    CurrencyAdd
   }
 });
 </script>

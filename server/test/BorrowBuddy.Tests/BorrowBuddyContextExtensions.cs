@@ -1,12 +1,15 @@
+using System;
 using BorrowBuddy.Data;
 using BorrowBuddy.Domain;
 
 namespace BorrowBuddy.Test {
   internal static class ContextExtensions {
-    
-    public static Currency AddCurrency(this BorrowBuddyContext context) {
-      var currency = new Currency() {
-        Code = "BYN"
+    public static Currency AddCurrency(this BorrowBuddyContext context, string code = "") {
+      if (string.IsNullOrEmpty(code)) {
+        code = Guid.NewGuid().ToString();
+      }
+      var currency = new Currency {
+        Code = code
       };
       context.Currencies.Add(currency);
       context.SaveChanges();
@@ -19,19 +22,26 @@ namespace BorrowBuddy.Test {
       context.SaveChanges();
       return participant;
     }
-    
-    public static Flow Addlow(this BorrowBuddyContext context, Participant from, Participant to, Currency currency, int amount) {
-      var flow = new Flow() {
+
+    public static Flow AddFlow(this BorrowBuddyContext context, Participant from, Participant to, Currency currency, long amount) {
+      var flow = new Flow {
         Lendee = to,
         Lender = from,
         Amount = new Money {
           Currency = currency,
           Value = amount
-        },
+        }
       };
-      var f = context.Flows.Add(flow);
+      context.Flows.Add(flow);
       context.SaveChanges();
       return flow;
+    }
+
+    public static Flow AddFlow(this BorrowBuddyContext context, long amount = 0) {
+      var currency = context.AddCurrency();
+      var from = context.AddParticipant();
+      var to = context.AddParticipant();
+      return context.AddFlow(from, to, currency, amount);
     }
   }
 }

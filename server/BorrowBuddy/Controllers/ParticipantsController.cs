@@ -2,7 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BorrowBuddy.Responses;
+using BorrowBuddy.Dto;
+using BorrowBuddy.Models;
+using BorrowBuddy.Models.Requests;
+using BorrowBuddy.Models.Resources;
 using BorrowBuddy.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,7 +23,7 @@ namespace BorrowBuddy.Controllers {
 
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Participant>>> GetParticipantAsync() {
-      return (await _participantService.GetAsync()).Select(Model.Map).ToList();
+      return (await _participantService.GetAsync()).Select(Mapper.Map).ToList();
     }
 
     [HttpGet("{id}")]
@@ -31,12 +34,48 @@ namespace BorrowBuddy.Controllers {
         return NotFound();
       }
 
-      return Model.Map(participant);
+      return Mapper.Map(participant);
+    }
+
+    [HttpPut("{id}")]
+    public async Task<IActionResult> PutFlow([FromRoute] Guid id, [FromBody] Participant model) {
+      if(model.Id != id) {
+        return BadRequest();
+      }
+
+      if(!await ParticipantExistsAsync(id)) {
+        return NotFound();
+      }
+
+      var flow = _participantService.UpdateAsync(id,
+        new ParticipantDto {
+          FirstName = model.FirstName,
+          LastName = model.LastName,
+          MiddleName = model.MiddleName
+        });
+
+      return NoContent();
+    }
+
+    [HttpPost]
+    [ProducesResponseType(201)]
+    public async Task<ActionResult<Participant>> PostFlow(ParticipantPost model) {
+      var participant = await _participantService.AddAsync(new ParticipantDto {
+        FirstName = model.FirstName,
+        LastName = model.LastName,
+        MiddleName = model.MiddleName
+      });
+
+      return CreatedAtAction(nameof(GetParticipant), new { id = participant.Id }, Mapper.Map(participant));
     }
 
     [HttpGet("{from}/balance/{to}")]
     public async Task<ActionResult<long>> BalanceAsync(Guid from, Guid to) {
       return await _balanceService.BalanceAsync(from, to);
+    }
+
+    private async Task<bool> ParticipantExistsAsync(Guid id) {
+      return (await _participantService.GetAsync(id)) != null;
     }
   }
 }
