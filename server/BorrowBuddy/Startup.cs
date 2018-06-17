@@ -30,6 +30,7 @@ namespace BorrowBuddy {
       .AllowCredentials());
       });
 
+      services.AddScoped<DbMigrator>();
       services.AddDbContextPool<BorrowBuddyContext>(options => options
               .UseLazyLoadingProxies()
               .UseSqlServer(Configuration.GetConnectionString("BorrowBuddyContext")));
