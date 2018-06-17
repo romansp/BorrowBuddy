@@ -2,7 +2,7 @@ import axios from "axios";
 import { IPayload, PayloadMapper, PayloadMessageTypes } from "../model";
 
 export const server = axios.create({
-  baseURL: "https://localhost:44347/api/"
+  baseURL: process.env.VUE_APP_API_URL
 });
 
 export function exec<T>(cb: Promise<{}>): Promise<T> {
