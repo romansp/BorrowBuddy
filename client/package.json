@@ -34,8 +34,8 @@
     "vue-template-compiler": "^2.5.16"
   },
   "browserslist": [
-    "last 2 versions",
-    "not dead"
+    "> 1%",
+    "last 2 versions"
   ],
   "gitHooks": {
     "pre-commit": "lint-staged"

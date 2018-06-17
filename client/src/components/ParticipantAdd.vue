@@ -48,7 +48,6 @@ export default Vue.extend({
     async submit() {
       const { firstName, middleName, lastName } = this;
       await add({
-        id: "",
         firstName,
         middleName,
         lastName
