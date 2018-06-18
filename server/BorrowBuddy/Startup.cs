@@ -39,14 +39,15 @@ namespace BorrowBuddy {
     }
 
     public void Configure(IApplicationBuilder app, IHostingEnvironment env) {
+      app.UseDefaultFiles();
       app.UseStaticFiles();
       if(env.IsDevelopment()) {
         app.UseDeveloperExceptionPage();
+        app.UseCors("CorsPolicy");
       } else {
         app.UseHsts();
       }
       app.UseHttpsRedirection();
-      app.UseCors("CorsPolicy");
       app.UseMvc();
       app.UseSwagger();
       app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/api/swagger.json", "BorrowBuddy"));
