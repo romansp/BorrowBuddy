@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "build": "vue-cli-service build --modern",
     "lint": "vue-cli-service lint && npm run wotan:fix",
     "tslint:fix": "tslint -p . -c tslint.json --fix",
     "wotan:fix": "wotan -p . -c tslint.json --fix"
