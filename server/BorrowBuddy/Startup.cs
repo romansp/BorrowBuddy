@@ -22,26 +22,21 @@ namespace BorrowBuddy {
       services.AddTransient<FlowService>();
       services.AddTransient<BalanceService>();
       services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-      services.AddCors(options => {
-        options.AddPolicy("CorsPolicy",
-      builder => builder.AllowAnyOrigin()
-      .AllowAnyMethod()
-      .AllowAnyHeader()
-      .AllowCredentials());
-      });
+      services.AddCors(options =>
+        options.AddPolicy("CorsPolicy", builder =>
+          builder.AllowAnyOrigin()
+                 .AllowAnyMethod()
+                 .AllowAnyHeader()
+                 .AllowCredentials()
+          )
+      );
 
-      services.AddScoped<DbMigrator>();
-
-      var appConfig = new AppConfig();
-      var appConfigSection = Configuration.GetSection(AppConfig.ConfigSection);
-      appConfigSection.Bind(appConfig);
-      services.Configure<AppConfig>(Configuration.GetSection(AppConfig.ConfigSection));
-
+      var appConfig = services.AddAppConfig(Configuration);
       var connectionString = Configuration.GetConnectionString();
       services.AddDbContext(appConfig.DbDialect, connectionString);
+      services.AddScoped<DbMigrator>();
       services.AddSwaggerGen(c => c.SwaggerDoc("api", new Info { Title = "BorrowBuddy" }));
     }
-
 
     public void Configure(IApplicationBuilder app, IHostingEnvironment env) {
       if(env.IsDevelopment()) {
