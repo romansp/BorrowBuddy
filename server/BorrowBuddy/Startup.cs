@@ -31,9 +31,16 @@ namespace BorrowBuddy {
       });
 
       services.AddScoped<DbMigrator>();
-      services.AddDbContextPool<BorrowBuddyContext>(options => options
-              .UseLazyLoadingProxies()
-              .UseSqlServer(Configuration.GetConnectionString("BorrowBuddyContext")));
+
+      if (Configuration["DbDialect"] == "MySQL") {
+        services.AddDbContextPool<BorrowBuddyContext>(options => options
+             .UseLazyLoadingProxies()
+             .UseMySql(Configuration.GetConnectionString("BorrowBuddyContext")));
+      } else {
+        services.AddDbContextPool<BorrowBuddyContext>(options => options
+            .UseLazyLoadingProxies()
+            .UseSqlServer(Configuration.GetConnectionString("BorrowBuddyContext")));
+      }
 
       services.AddSwaggerGen(c => c.SwaggerDoc("api", new Info { Title = "BorrowBuddy" }));
     }
