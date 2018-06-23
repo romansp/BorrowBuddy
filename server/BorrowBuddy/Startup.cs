@@ -7,6 +7,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
 using BorrowBuddy.Configuration;
+using Microsoft.Net.Http.Headers;
+using Microsoft.AspNetCore.Http;
+using System;
 
 namespace BorrowBuddy {
   public class Startup {
@@ -21,6 +24,7 @@ namespace BorrowBuddy {
       services.AddTransient<ParticipantService>();
       services.AddTransient<FlowService>();
       services.AddTransient<BalanceService>();
+      services.AddResponseCaching();
       services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
       services.AddCors(options =>
         options.AddPolicy("CorsPolicy", builder =>
@@ -46,8 +50,22 @@ namespace BorrowBuddy {
         app.UseHsts();
       }
       app.UseHttpsRedirection();
+      app.UseResponseCaching();
       app.UseDefaultFiles();
-      app.UseStaticFiles();
+      app.UseStaticFiles(new StaticFileOptions() {
+        OnPrepareResponse = ctx => {
+          if(!string.Equals("service-worker.js", ctx.File.Name, StringComparison.OrdinalIgnoreCase)) {
+            return;
+          }
+          var headers = ctx.Context.Response.GetTypedHeaders();
+          headers.CacheControl = new CacheControlHeaderValue {
+            MaxAge = TimeSpan.FromMinutes(1),
+            NoCache = true,
+            NoStore = true
+          };
+          headers.Expires = DateTimeOffset.UtcNow.AddDays(-1);
+        }
+      });
       app.UseMvc();
       app.UseSwagger();
       app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/api/swagger.json", "BorrowBuddy"));
