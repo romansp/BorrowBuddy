@@ -1,19 +1,34 @@
 <template>
   <v-app>
+    <BbNavigationDrawer v-model="drawer" />
+    <v-toolbar app>
+      <v-toolbar-side-icon @click.stop="drawer = !drawer"/>
+      <v-toolbar-title>Borrow Buddy</v-toolbar-title>
+    </v-toolbar>
     <v-content>
-      <v-container>Hello world</v-container>
+      <v-container fluid>
+        <router-view/>
+      </v-container>
     </v-content>
+    <v-footer app/>
   </v-app>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
-export default Vue.extend({});
-</script>
 
-<style lang="styl">
-@import "styles/app";
-</style>
+import BbNavigationDrawer from "@/components/BbNavigationDrawer.vue";
+
+export default Vue.extend({
+  components: {
+    BbNavigationDrawer
+  },
+
+  data: () => ({
+    drawer: false
+  })
+});
+</script>
 
 <style lang="scss">
 @import "styles/app";

@@ -18,6 +18,7 @@ export default new Router({
       path: "/admin",
       name: "admin",
       component: Admin,
+      redirect: { name: "admin.participants" },
       children: [
         {
           path: "currencies",
