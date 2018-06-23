@@ -17,9 +17,9 @@
     "vuex": "^3.0.1"
   },
   "devDependencies": {
-    "@fimbul/valtyr": "^0.10.0",
-    "@fimbul/ve": "^0.10.0",
-    "@fimbul/wotan": "^0.10.0",
+    "@fimbul/valtyr": "^0.11.0",
+    "@fimbul/ve": "^0.11.0",
+    "@fimbul/wotan": "^0.11.0",
     "@vue/cli-plugin-babel": "^3.0.0-beta.15",
     "@vue/cli-plugin-eslint": "^3.0.0-beta.15",
     "@vue/cli-plugin-pwa": "^3.0.0-beta.15",
