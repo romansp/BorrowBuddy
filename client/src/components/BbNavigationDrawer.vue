@@ -16,9 +16,7 @@
         <v-list-tile slot="activator">
           <v-list-tile-title>Settings</v-list-tile-title>
         </v-list-tile>
-        <v-list-tile 
-          to="/admin/participants" 
-          prepend-icon="settings">
+        <v-list-tile to="/admin/participants">
           <v-list-tile-content>
             <v-list-tile-title>Users</v-list-tile-title>
           </v-list-tile-content>
