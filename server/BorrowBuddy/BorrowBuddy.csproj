@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
+    <ApplicationInsightsResourceId>/subscriptions/9305a959-27be-453f-b1b5-55792c7947d4/resourcegroups/BorrowBuddybea0/providers/microsoft.insights/components/BorrowBuddy</ApplicationInsightsResourceId>
+    <ApplicationInsightsAnnotationResourceId>/subscriptions/9305a959-27be-453f-b1b5-55792c7947d4/resourcegroups/BorrowBuddybea0/providers/microsoft.insights/components/BorrowBuddy</ApplicationInsightsAnnotationResourceId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -9,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="2.1.0" />
@@ -20,6 +23,10 @@
   <ItemGroup>
     <ProjectReference Include="..\BorrowBuddy.Domain\BorrowBuddy.Domain.csproj" />
     <ProjectReference Include="..\BorrowBuddy.Models\BorrowBuddy.Models.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services" />
   </ItemGroup>
 
 </Project>
