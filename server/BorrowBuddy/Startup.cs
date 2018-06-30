@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
-using BorrowBuddy.Configuration;
 using Microsoft.Net.Http.Headers;
 using Microsoft.AspNetCore.Http;
 using System;
