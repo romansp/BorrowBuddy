@@ -121,7 +121,7 @@ export default Vue.extend({
       } catch {
         //
       }
-      this.false = true;
+      this.deleting = true;
       this.goToList();
     }
   }

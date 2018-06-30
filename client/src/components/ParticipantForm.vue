@@ -31,6 +31,7 @@
 import Vue from "vue";
 
 import { add, update } from "@/services/participants.service";
+import { Participant } from "@/shared/models";
 
 export default Vue.extend({
   props: {
@@ -52,7 +53,7 @@ export default Vue.extend({
     async submit() {
       this.submitting = true;
 
-      const { firstName, middleName, lastName, id } = this.model;
+      const { firstName, middleName, lastName, id } = this.model as Participant;
       const model = {
         id,
         firstName,

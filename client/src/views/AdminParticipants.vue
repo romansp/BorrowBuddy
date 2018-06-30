@@ -42,15 +42,16 @@ export default Vue.extend({
   },
 
   watch: {
-    async "$route.name"(val) {
+    async "$route.name"(val): Promise<void | null> {
       if (val === "admin.participants") {
-        return await this.fetch();
+        return this.fetch();
       }
+      return null;
     }
   },
 
   created() {
-    return this.fetch();
+    this.fetch();
   },
 
   methods: {
