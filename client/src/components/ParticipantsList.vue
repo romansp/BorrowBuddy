@@ -3,9 +3,9 @@
     <v-subheader>Users</v-subheader>
     <v-list-tile 
       v-for="item in items" 
-      :key="item.firstName" 
-      avatar 
-      @click="edit">
+      :key="item.id" 
+      :to="{name: 'admin.participants.edit', params: { id: item.id }}" 
+      avatar>
       <v-list-tile-content>
         <v-list-tile-title v-text="item.firstName"/>
       </v-list-tile-content>
@@ -25,10 +25,6 @@ export default Vue.extend({
       type: Array,
       default: () => []
     }
-  },
-
-  methods: {
-    edit() {}
   }
 });
 </script>

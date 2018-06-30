@@ -13,8 +13,8 @@ export function add(participant: ParticipantPost) {
   return exec<Participant>(server.post("/participants", participant));
 }
 
-export function update(code: string, participant: Participant) {
-  return exec<Participant>(server.put(`/participants/${code}`, participant));
+export function update(id: string, participant: Participant) {
+  return exec<Participant>(server.put(`/participants/${id}`, participant));
 }
 
 export function remove(id: string) {

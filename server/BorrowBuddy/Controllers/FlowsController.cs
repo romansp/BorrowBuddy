@@ -45,7 +45,7 @@ namespace BorrowBuddy.Controllers {
         return NotFound();
       }
 
-      var flow = _flowService.UpdateAsync(id,
+      var flow = await _flowService.UpdateAsync(id,
         new FlowDto {
           Amount = model.Amount,
           CurrencyCode = model.CurrencyCode,

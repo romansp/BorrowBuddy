@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using BorrowBuddy.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,8 +10,8 @@ namespace BorrowBuddy {
       _context = context;
     }
 
-    public void Migrate() {
-      _context.Database.Migrate();
+    public Task Migrate() {
+      return _context.Database.MigrateAsync();
     }
   }
 }

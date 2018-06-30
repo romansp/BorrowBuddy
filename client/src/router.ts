@@ -4,6 +4,7 @@ import Admin from "./views/Admin.vue";
 import AdminCurrencies from "./views/AdminCurrencies.vue";
 import AdminParticipants from "./views/AdminParticipants.vue";
 import AdminParticipantsAdd from "./views/AdminParticipantsAdd.vue";
+import AdminParticipantsEdit from "./views/AdminParticipantsEdit.vue";
 import Home from "./views/Home.vue";
 
 Vue.use(Router);
@@ -35,6 +36,12 @@ export default new Router({
               path: "add",
               name: "admin.participants.add",
               component: AdminParticipantsAdd
+            },
+            {
+              path: ":id/edit",
+              name: "admin.participants.edit",
+              component: AdminParticipantsEdit,
+              props: true
             }
           ]
         }

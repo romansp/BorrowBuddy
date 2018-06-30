@@ -16,21 +16,12 @@
           <v-icon>close</v-icon>
         </v-btn>
         <v-toolbar-title>Add User</v-toolbar-title>
-        <v-spacer/>
-        <v-toolbar-items>
-          <v-btn 
-            :to="{ name: 'admin.participants' }" 
-            exact
-            dark 
-            flat>Save</v-btn>
-        </v-toolbar-items>
       </v-toolbar>
-      <v-list 
-        three-line 
-        subheader>
-        <v-subheader>Add User</v-subheader>
-        <ParticipantAdd />
-      </v-list>
+      <v-card-text>
+        <ParticipantForm 
+          v-model="participant" 
+          @saved="goToList" />
+      </v-card-text>
     </v-card>
   </v-dialog>
 </template>
@@ -38,21 +29,34 @@
 <script lang="ts">
 import Vue from "vue";
 
-import ParticipantAdd from "@/components/ParticipantAdd.vue";
+import ParticipantForm from "@/components/ParticipantForm.vue";
 
 export default Vue.extend({
   components: {
-    ParticipantAdd
+    ParticipantForm
   },
 
   data() {
     return {
-      opened: false
+      opened: false,
+      participant: {
+        firstName: "",
+        lastName: "",
+        middleName: ""
+      }
     };
   },
 
   mounted() {
     this.opened = true;
+  },
+
+  methods: {
+    goToList() {
+      this.$router.push({
+        name: "admin.participants"
+      });
+    }
   }
 });
 </script>

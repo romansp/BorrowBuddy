@@ -38,7 +38,7 @@ namespace BorrowBuddy.Controllers {
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> PutFlow([FromRoute] Guid id, [FromBody] Participant model) {
+    public async Task<IActionResult> PutParticipant([FromRoute] Guid id, [FromBody] Participant model) {
       if(model.Id != id) {
         return BadRequest();
       }
@@ -47,7 +47,7 @@ namespace BorrowBuddy.Controllers {
         return NotFound();
       }
 
-      var flow = _participantService.UpdateAsync(id,
+      var flow = await _participantService.UpdateAsync(id,
         new ParticipantDto {
           FirstName = model.FirstName,
           LastName = model.LastName,
@@ -59,7 +59,7 @@ namespace BorrowBuddy.Controllers {
 
     [HttpPost]
     [ProducesResponseType(201)]
-    public async Task<ActionResult<Participant>> PostFlow(ParticipantPost model) {
+    public async Task<ActionResult<Participant>> PostParticipant(ParticipantPost model) {
       var participant = await _participantService.AddAsync(new ParticipantDto {
         FirstName = model.FirstName,
         LastName = model.LastName,
@@ -69,7 +69,18 @@ namespace BorrowBuddy.Controllers {
       return CreatedAtAction(nameof(GetParticipant), new { id = participant.Id }, Mapper.Map(participant));
     }
 
-    [HttpGet("{from}/balance/{to}")]
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteParticipant(Guid id) {
+      if(!await ParticipantExistsAsync(id)) {
+        return NotFound();
+      }
+
+      await _participantService.DeleteAsync(id);
+      return NoContent();
+    }
+
+        [HttpGet("{from}/balance/{to}")]
     public async Task<ActionResult<long>> BalanceAsync(Guid from, Guid to) {
       return await _balanceService.BalanceAsync(from, to);
     }
