@@ -1,5 +1,5 @@
 import Vue from "vue";
-import Router from "vue-router";
+import Router, { RouteConfig, RouterOptions } from "vue-router";
 import Admin from "./views/Admin.vue";
 import AdminCurrencies from "./views/AdminCurrencies.vue";
 import AdminCurrenciesAdd from "./views/AdminCurrenciesAdd.vue";
@@ -11,56 +11,86 @@ import Home from "./views/Home.vue";
 
 Vue.use(Router);
 
-export default new Router({
+// prettier-ignore
+export type Keys =
+  | "home"
+    | "admin"
+      | "admin.currency"
+        | "admin.currency.add"
+        | "admin.currency.edit"
+      | "admin.participant"
+        | "admin.participant.add"
+        | "admin.participant.edit";
+
+export const routes: { readonly [R in Keys]: RouteConfig } = {
+  home: {
+    path: "/",
+    name: "home",
+    component: Home
+  },
+  admin: {
+    path: "/admin",
+    name: "admin",
+    component: Admin
+  },
+  "admin.currency": {
+    path: "currencies",
+    name: "admin.currency",
+    component: AdminCurrencies
+  },
+  "admin.currency.add": {
+    path: "add",
+    name: "admin.currency.add",
+    component: AdminCurrenciesAdd
+  },
+  "admin.currency.edit": {
+    path: ":id/edit",
+    name: "admin.currency.edit",
+    component: AdminCurrenciesEdit,
+    props: true
+  },
+  "admin.participant": {
+    path: "participants",
+    name: "admin.participant",
+    component: AdminParticipants
+  },
+  "admin.participant.add": {
+    path: "add",
+    name: "admin.participant.add",
+    component: AdminParticipantsAdd
+  },
+  "admin.participant.edit": {
+    path: ":id/edit",
+    name: "admin.participant.edit",
+    component: AdminParticipantsEdit,
+    props: true
+  }
+};
+
+const options: RouterOptions = {
   routes: [
+    routes.home,
     {
-      path: "/",
-      name: "home",
-      component: Home
-    },
-    {
-      path: "/admin",
-      name: "admin",
-      component: Admin,
-      redirect: { name: "admin.participant" },
+      ...routes.admin,
+      redirect: routes["admin.participant"],
       children: [
         {
-          path: "currencies",
-          name: "admin.currency",
-          component: AdminCurrencies,
+          ...routes["admin.currency"],
           children: [
-            {
-              path: "add",
-              name: "admin.currency.add",
-              component: AdminCurrenciesAdd
-            },
-            {
-              path: ":id/edit",
-              name: "admin.currency.edit",
-              component: AdminCurrenciesEdit,
-              props: true
-            }
+            routes["admin.currency.add"],
+            routes["admin.currency.edit"]
           ]
         },
         {
-          path: "participants",
-          name: "admin.participant",
-          component: AdminParticipants,
+          ...routes["admin.participant"],
           children: [
-            {
-              path: "add",
-              name: "admin.participant.add",
-              component: AdminParticipantsAdd
-            },
-            {
-              path: ":id/edit",
-              name: "admin.participant.edit",
-              component: AdminParticipantsEdit,
-              props: true
-            }
+            routes["admin.participant.add"],
+            routes["admin.participant.edit"]
           ]
         }
       ]
     }
   ]
-});
+};
+
+export default new Router(options);

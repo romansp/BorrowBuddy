@@ -9,7 +9,7 @@
         dark 
         color="primary">
         <v-btn 
-          :to="adminCurrencyRoute" 
+          :to="routeList" 
           exact
           icon 
           dark>
@@ -30,6 +30,7 @@
 import Vue from "vue";
 
 import CurrencyForm from "@/components/CurrencyForm.vue";
+import { routes } from "@/router";
 
 export default Vue.extend({
   components: {
@@ -37,12 +38,9 @@ export default Vue.extend({
   },
 
   data() {
-    const adminCurrencyRoute = {
-      name: "admin.currency"
-    };
     return {
       opened: false,
-      adminCurrencyRoute,
+      routeList: routes["admin.currency"],
       currency: {
         code: "",
         symbol: "",
@@ -57,7 +55,7 @@ export default Vue.extend({
 
   methods: {
     goToList() {
-      this.$router.push(this.adminCurrencyRoute);
+      this.$router.push(this.routeList);
     }
   }
 });

@@ -4,7 +4,7 @@
     <v-list-tile 
       v-for="item in items" 
       :key="item[itemKey]" 
-      :to="{ name: route, params: { id: item[itemKey] } }" 
+      :to="{ name: route.name, params: { id: item[itemKey] } }" 
       avatar>
       <v-list-tile-content>
         <v-list-tile-title v-text="item[itemLabel]"/>
@@ -32,9 +32,9 @@ export default Vue.extend({
     },
 
     route: {
-      type: String,
+      type: Object,
       required: false,
-      default: ""
+      default: () => ({})
     },
 
     itemKey: {

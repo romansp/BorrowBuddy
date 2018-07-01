@@ -30,6 +30,7 @@
 import Vue from "vue";
 
 import ParticipantForm from "@/components/ParticipantForm.vue";
+import { routes } from "@/router";
 
 export default Vue.extend({
   components: {
@@ -39,6 +40,7 @@ export default Vue.extend({
   data() {
     return {
       opened: false,
+      routeList: routes["admin.participant"],
       participant: {
         firstName: "",
         lastName: "",
@@ -53,9 +55,7 @@ export default Vue.extend({
 
   methods: {
     goToList() {
-      this.$router.push({
-        name: "admin.participant"
-      });
+      this.$router.push(this.routeList);
     }
   }
 });

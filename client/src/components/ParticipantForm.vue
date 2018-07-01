@@ -7,6 +7,7 @@
     @submit.prevent="submit">
     <v-text-field
       v-model="model.firstName"
+      autofocus
       autocomplete="given-name"
       label="First Name"
       required
@@ -24,7 +25,6 @@
     <v-btn
       :loading="submitting"
       type="submit"
-      @click="submit"
     >
       submit
     </v-btn>

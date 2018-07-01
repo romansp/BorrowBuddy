@@ -2,6 +2,7 @@
   <v-form 
     ref="form"
     v-model="valid" 
+    lazy-validation
     method="post" 
     @submit.prevent="submit">
     <v-text-field
@@ -22,7 +23,6 @@
     <v-btn
       :loading="submitting"
       type="submit"
-      @click="submit"
     >
       submit
     </v-btn>

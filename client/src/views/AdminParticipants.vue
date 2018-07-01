@@ -1,11 +1,15 @@
 <template>
   <div>
     <v-card>
-      <ParticipantsList 
-        :items="participants"/>
+      <ItemList 
+        :items="participants"
+        :route="routeEdit"
+        title="Currencies"
+        item-key="id"
+        item-label="firstName"/>
       <v-card-text style="position: relative">
         <v-btn
-          :to="{ name: 'admin.participant.add' }"
+          :to="routeAdd"
           fixed
           dark
           fab
@@ -24,26 +28,29 @@
 <script lang="ts">
 import Vue from "vue";
 
-import ParticipantsList from "@/components/ParticipantsList.vue";
+import ItemList from "@/components/ItemList.vue";
+import { routes } from "@/router";
 import { getAll } from "@/services/participants.service";
 import { Participant } from "@/shared/models";
 
 export default Vue.extend({
   components: {
-    ParticipantsList
+    ItemList
   },
 
   data() {
     const participants: Participant[] = [];
     return {
       participants,
+      routeAdd: routes["admin.participant.add"],
+      routeEdit: routes["admin.participant.edit"],
       dialogAdd: false
     };
   },
 
   watch: {
     async "$route.name"(val): Promise<void | null> {
-      if (val === "admin.participant") {
+      if (val === routes["admin.participant"].name) {
         return this.fetch();
       }
       return null;

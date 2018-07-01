@@ -9,7 +9,7 @@
         dark 
         color="primary">
         <v-btn 
-          :to="{ name: 'admin.participant' }" 
+          :to="routeList" 
           exact
           icon 
           dark>
@@ -75,6 +75,7 @@
 import Vue from "vue";
 
 import ParticipantForm from "@/components/ParticipantForm.vue";
+import { routes } from "@/router";
 import { get, remove } from "@/services/participants.service";
 import { Participant } from "@/shared/models";
 
@@ -92,6 +93,7 @@ export default Vue.extend({
 
   data() {
     return {
+      routeList: routes["admin.participant"],
       participant: undefined as Participant | undefined,
       deleting: false,
       opened: false,
@@ -109,9 +111,7 @@ export default Vue.extend({
 
   methods: {
     goToList() {
-      this.$router.push({
-        name: "admin.participant"
-      });
+      this.$router.push(this.routeList);
     },
 
     async remove() {

@@ -3,14 +3,14 @@
     <v-card>
       <ItemList 
         :items="currencies"
+        :route="routeEdit"
         title="Currencies"
         item-key="code"
         item-label="code"
-        route="admin.currency.edit"
       />
       <v-card-text style="position: relative">
         <v-btn
-          :to="{ name: 'admin.currency.add' }"
+          :to="routeAdd"
           fixed
           dark
           fab
@@ -31,6 +31,7 @@ import Vue from "vue";
 
 import CurrencyAdd from "@/components/CurrencyAdd.vue";
 import ItemList from "@/components/ItemList.vue";
+import { routes } from "@/router";
 import { getAll } from "@/services/currency.service";
 import { Currency } from "@/shared/models";
 
@@ -44,13 +45,15 @@ export default Vue.extend({
     const currencies: Currency[] = [];
     return {
       currencies,
+      routeAdd: routes["admin.currency.add"],
+      routeEdit: routes["admin.currency.edit"],
       dialogAdd: false
     };
   },
 
   watch: {
     async "$route.name"(val): Promise<void | null> {
-      if (val === "admin.currency") {
+      if (val === routes["admin.currency"].name) {
         return this.fetch();
       }
       return null;
