@@ -2,49 +2,54 @@
   <form 
     method="post" 
     @submit.prevent="submit">
-    <div>
-      From: <select 
-        v-model="from" 
-        name="from">
-        <option 
-          v-for="participant in participants" 
-          :key="participant.id" 
-          :value="participant.id">{{ participant.firstName }}</option>
-      </select>
-    </div>
-    <div>
-      To: <select 
-        v-model="to" 
-        name="to">
-        <option 
-          v-for="participant in participants" 
-          :key="participant.id" 
-          :value="participant.id">{{ participant.firstName }}</option>
-      </select>
-    </div>
-    <div>
-      <button 
-        type="button" 
-        @click="swap">Swap</button>
-    </div>
-    <div>
-      Total: <input 
-        v-model.number="amount" 
-        type="number" 
-        name="amount">
-    </div>
+    <v-text-field
+      v-model.number="amount"
+      autofocus
+      type="number"
+      label="Amount"
+    />
+    <v-layout 
+      row 
+    >
+      <v-flex xs6>
+        <v-select 
+          v-model="from"
+          :items="skip(participants, to)"
+          name="from"
+          item-text="firstName"
+          item-value="id"
+          label="From"/>
+      </v-flex>
+      <v-flex class="swap-button">
+        <v-btn 
+          type="button"
+          title="Swap" 
+          @click="swap">
+          <v-icon>swap_horiz</v-icon>
+        </v-btn>
+      </v-flex>
+      <v-flex xs6>
+        <v-select 
+          v-model="to" 
+          :items="skip(participants, from)"
+          name="To"
+          item-text="firstName"
+          item-value="id"
+          label="To"/>
+      </v-flex>
+    </v-layout>
     <div>
       <Balance 
         :from="from" 
         :to="to" />
     </div>
-    <div> 
-      Comment: <input 
-        v-model="comment" 
-        type="text" 
-        name="comment">
-    </div>
-    <button type="submit">OK</button>
+    <v-textarea
+      v-model="comment" 
+      placeholder="Comment"
+      auto-grow
+      rows="1"
+    />
+    <v-btn type="submit">OK</v-btn>
   </form>
 </template>
 
@@ -53,6 +58,7 @@
 import Vue from "vue";
 import { mapState } from "vuex";
 
+import { Participant } from "@/shared/models";
 import { add, getAll } from "../services/flows.service";
 import Balance from "./Balance.vue";
 
@@ -63,7 +69,7 @@ export default Vue.extend({
 
   data() {
     return {
-      amount: 0,
+      amount: undefined,
       from: "",
       to: "",
       comment: ""
@@ -81,6 +87,9 @@ export default Vue.extend({
   methods: {
     async submit() {
       const { amount, from, to, comment } = this;
+      if (!amount) {
+        return;
+      }
       await add({
         amount,
         lender: from,
@@ -89,11 +98,22 @@ export default Vue.extend({
         currencyCode: "BYN"
       });
     },
+
     swap() {
       const temp = this.from;
       this.from = this.to;
       this.to = temp;
+    },
+
+    skip(items: Participant[], selected: string) {
+      return items.filter(item => item.id !== selected);
     }
   }
 });
 </script>
+
+<style lang="scss" scoped>
+.swap-button {
+  flex: 0 1 auto;
+}
+</style>

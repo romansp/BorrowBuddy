@@ -1,5 +1,9 @@
 <template>
-  <span>{{ balance }}</span>
+  <v-text-field 
+    :value="balance"
+    tabindex="-1" 
+    label="Current balance"
+    readonly />
 </template>
 
 
