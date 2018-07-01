@@ -21,6 +21,8 @@ export function remove(id: string) {
   return exec(server.delete(`/participants/${id}`));
 }
 
-export function balance(from: string, to: string) {
-  return exec<number>(server.get(`/participants/${from}/balance/${to}`));
+export function balance(from: string, to: string, code: string) {
+  return exec<number>(
+    server.get(`/participants/${from}/balance/${to}/${code}`)
+  );
 }

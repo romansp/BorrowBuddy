@@ -2,12 +2,28 @@
   <form 
     method="post" 
     @submit.prevent="submit">
-    <v-text-field
-      v-model.number="amount"
-      autofocus
-      type="number"
-      label="Amount"
-    />
+    <v-layout 
+      row 
+    >
+      <v-flex shrink>
+        <v-select 
+          v-model="currency"
+          :items="currencies"
+          required
+          return-object
+          name="from"
+          item-text="code"
+          label="Currency"/>
+      </v-flex>
+     
+      <v-text-field
+        v-model.number="amount"
+        :step="currencyScale"
+        autofocus
+        type="number"
+        label="Amount"
+      />
+    </v-layout>
     <v-layout 
       row 
     >
@@ -15,10 +31,12 @@
         <v-select 
           v-model="from"
           :items="skip(participants, to)"
+          required
           name="from"
           item-text="firstName"
           item-value="id"
-          label="From"/>
+          label="From"
+          @change="updateBalance"/>
       </v-flex>
       <v-flex class="swap-button">
         <v-btn 
@@ -32,16 +50,17 @@
         <v-select 
           v-model="to" 
           :items="skip(participants, from)"
+          required
           name="To"
           item-text="firstName"
           item-value="id"
-          label="To"/>
+          label="To"
+          @change="updateBalance"/>
       </v-flex>
     </v-layout>
     <div>
       <Balance 
-        :from="from" 
-        :to="to" />
+        :amount="balance.amount * currencyScale" />
     </div>
     <v-textarea
       v-model="comment" 
@@ -49,7 +68,9 @@
       auto-grow
       rows="1"
     />
-    <v-btn type="submit">OK</v-btn>
+    <v-btn 
+      :loading="submitting" 
+      type="submit">OK</v-btn>
   </form>
 </template>
 
@@ -58,7 +79,7 @@
 import Vue from "vue";
 import { mapState } from "vuex";
 
-import { Participant } from "@/shared/models";
+import { Currency, Participant } from "@/shared/models";
 import { add, getAll } from "../services/flows.service";
 import Balance from "./Balance.vue";
 
@@ -69,34 +90,57 @@ export default Vue.extend({
 
   data() {
     return {
+      currency: undefined as Currency | undefined,
       amount: undefined,
+      submitting: false,
       from: "",
       to: "",
       comment: ""
     };
   },
 
-  computed: mapState<any>({
-    participants: state => state.participants
-  }),
+  computed: {
+    ...mapState<any>({
+      participants: state => state.participants,
+      currencies: state => state.currencies,
+      balance: state => state.balance
+    }),
+    currencyScale(): number {
+      const currency = this.currency as Currency | undefined;
+      return currency ? 1 / currency.scale : 100;
+    }
+  },
 
   async mounted() {
-    await this.$store.dispatch("PARTICIPANTS_FETCH");
+    this.$store.dispatch("PARTICIPANTS_FETCH");
+    this.$store.dispatch("CURRENCIES_FETCH");
   },
 
   methods: {
+    async updateBalance() {
+      const { from, to, currency } = this;
+      if (from && to && currency) {
+        await this.$store.dispatch("BALANCE_FETCH", {
+          from,
+          to,
+          code: currency.code
+        });
+      }
+    },
+
     async submit() {
-      const { amount, from, to, comment } = this;
-      if (!amount) {
+      const { amount, from, to, comment, currency } = this;
+      if (!amount || !from || !to || !currency) {
         return;
       }
       await add({
-        amount,
+        amount: amount * currency.scale,
         lender: from,
         lendee: to,
         comment,
-        currencyCode: "BYN"
+        currencyCode: currency.code
       });
+      await this.updateBalance();
     },
 
     swap() {

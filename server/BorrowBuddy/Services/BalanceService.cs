@@ -13,16 +13,16 @@ namespace BorrowBuddy.Services {
       _context = context;
     }
 
-    public async Task<long> BalanceAsync(Guid lenderId, Guid lendeeId) {
+    public async Task<long> BalanceAsync(Guid lenderId, Guid lendeeId, string code) {
       var from = await _context.Participants.FirstOrDefaultAsync(c => c.Id == lenderId);
       var to = await _context.Participants.FirstOrDefaultAsync(c => c.Id == lendeeId);
-      return from.Balance(to) - to.Balance(from);
+      return from.Balance(to, code) - to.Balance(from, code);
     }
   }
 
   public static class BalanceExtensions {
-    public static long Balance(this Participant from, Participant to) {
-      var outcomingFlows = from.Lended.Where(c => c.Lendee == to);
+    public static long Balance(this Participant from, Participant to, string code) {
+      var outcomingFlows = from.Lended.Where(c => c.Lendee == to && c.Amount.Currency.Code == code);
       return outcomingFlows.Sum(c => c.Amount.Value);
     }
   }

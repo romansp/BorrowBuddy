@@ -80,9 +80,9 @@ namespace BorrowBuddy.Controllers {
       return NoContent();
     }
 
-        [HttpGet("{from}/balance/{to}")]
-    public async Task<ActionResult<long>> BalanceAsync(Guid from, Guid to) {
-      return await _balanceService.BalanceAsync(from, to);
+        [HttpGet("{from}/balance/{to}/{code}")]
+    public async Task<ActionResult<long>> BalanceAsync(Guid from, Guid to, string code) {
+      return await _balanceService.BalanceAsync(from, to, code);
     }
 
     private async Task<bool> ParticipantExistsAsync(Guid id) {
