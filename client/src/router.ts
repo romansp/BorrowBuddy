@@ -23,12 +23,12 @@ export type Keys =
         | "admin.participant.edit";
 
 export const routes: { readonly [R in Keys]: RouteConfig } = {
-  home: {
+  "home": {
     path: "/",
     name: "home",
     component: Home
   },
-  admin: {
+  "admin": {
     path: "/admin",
     name: "admin",
     component: Admin

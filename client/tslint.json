@@ -2,10 +2,7 @@
   "defaultSeverity": "warning",
   "extends": ["tslint:recommended"],
   "linterOptions": {
-    "exclude": [
-      "node_modules/**",
-      "../shared/**"
-    ]
+    "exclude": ["node_modules/**", "../shared/**"]
   },
   "rules": {
     "arrow-parens": [true, "ban-single-arg-parens"],
@@ -16,6 +13,7 @@
     "ordered-imports": true,
     "object-literal-sort-keys": false,
     "no-consecutive-blank-lines": true,
-    "trailing-comma": false
+    "trailing-comma": false,
+    "object-literal-key-quotes": [true, "consistent-as-needed"]
   }
 }
