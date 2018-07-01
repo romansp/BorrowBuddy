@@ -7,12 +7,14 @@
     @submit.prevent="submit">
     <v-text-field
       v-model="model.code"
+      spellcheck="false"
       autofocus
       label="Code"
       required
     />
     <v-text-field
       v-model="model.symbol"
+      spellcheck="false"
       label="Symbol"
     />
     <v-text-field

@@ -1,6 +1,9 @@
 <template>
   <v-navigation-drawer 
     v-model="drawer" 
+    absolute
+    temporary
+    hide-overlay
     app>
     <v-list>
       <v-list-tile :to="{ name: 'home'}">
