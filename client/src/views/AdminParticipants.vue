@@ -4,7 +4,7 @@
       <ItemList 
         :items="participants"
         :route="routeEdit"
-        title="Currencies"
+        title="Users"
         item-key="id"
         item-label="firstName"/>
       <v-card-text style="position: relative">
