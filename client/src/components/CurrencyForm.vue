@@ -2,24 +2,22 @@
   <v-form 
     ref="form"
     v-model="valid" 
-    lazy-validation
     method="post" 
     @submit.prevent="submit">
     <v-text-field
-      v-model="model.firstName"
-      autocomplete="given-name"
-      label="First Name"
+      v-model="model.code"
+      autofocus
+      label="Code"
       required
     />
     <v-text-field
-      v-model="model.middleName"
-      autocomplete="additional-name"
-      label="Middle Name"
+      v-model="model.symbol"
+      label="Symbol"
     />
     <v-text-field
-      v-model="model.lastName"
-      autocomplete="family-name"
-      label="Last Name"
+      v-model="model.scale"
+      type="number"
+      label="Scale"
     />
     <v-btn
       :loading="submitting"
@@ -36,8 +34,8 @@
 import Vue from "vue";
 
 import { cloneDeep } from "@/common/utils";
-import { add, update } from "@/services/participants.service";
-import { Participant } from "@/shared/models";
+import { add, update } from "@/services/currency.service";
+import { Currency } from "@/shared/models";
 
 export default Vue.extend({
   props: {
@@ -48,7 +46,9 @@ export default Vue.extend({
   },
 
   data() {
+    const shouldUpdate = this.value.code !== "" ? true : false;
     return {
+      shouldUpdate,
       valid: false,
       submitting: false,
       model: cloneDeep(this.value)
@@ -59,17 +59,16 @@ export default Vue.extend({
     async submit() {
       this.submitting = true;
 
-      const { firstName, middleName, lastName, id } = this.model as Participant;
+      const { code, symbol, scale } = this.model as Currency;
       const model = {
-        id,
-        firstName,
-        lastName,
-        middleName
+        code,
+        symbol,
+        scale
       };
 
       try {
-        if (id) {
-          await update(id, model);
+        if (this.shouldUpdate) {
+          await update(code, model);
         } else {
           await add(model);
         }

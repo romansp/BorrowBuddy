@@ -5,7 +5,7 @@
         :items="participants"/>
       <v-card-text style="position: relative">
         <v-btn
-          :to="{ name: 'admin.participants.add' }"
+          :to="{ name: 'admin.participant.add' }"
           fixed
           dark
           fab
@@ -43,7 +43,7 @@ export default Vue.extend({
 
   watch: {
     async "$route.name"(val): Promise<void | null> {
-      if (val === "admin.participants") {
+      if (val === "admin.participant") {
         return this.fetch();
       }
       return null;

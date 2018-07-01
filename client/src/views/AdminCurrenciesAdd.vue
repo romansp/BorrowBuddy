@@ -9,17 +9,17 @@
         dark 
         color="primary">
         <v-btn 
-          :to="{ name: 'admin.participant' }" 
+          :to="adminCurrencyRoute" 
           exact
           icon 
           dark>
           <v-icon>close</v-icon>
         </v-btn>
-        <v-toolbar-title>Add User</v-toolbar-title>
+        <v-toolbar-title>Add Currency</v-toolbar-title>
       </v-toolbar>
       <v-card-text>
-        <ParticipantForm 
-          v-model="participant" 
+        <CurrencyForm 
+          v-model="currency" 
           @saved="goToList" />
       </v-card-text>
     </v-card>
@@ -29,20 +29,24 @@
 <script lang="ts">
 import Vue from "vue";
 
-import ParticipantForm from "@/components/ParticipantForm.vue";
+import CurrencyForm from "@/components/CurrencyForm.vue";
 
 export default Vue.extend({
   components: {
-    ParticipantForm
+    CurrencyForm
   },
 
   data() {
+    const adminCurrencyRoute = {
+      name: "admin.currency"
+    };
     return {
       opened: false,
-      participant: {
-        firstName: "",
-        lastName: "",
-        middleName: ""
+      adminCurrencyRoute,
+      currency: {
+        code: "",
+        symbol: "",
+        scale: 100
       }
     };
   },
@@ -53,9 +57,7 @@ export default Vue.extend({
 
   methods: {
     goToList() {
-      this.$router.push({
-        name: "admin.participant"
-      });
+      this.$router.push(this.adminCurrencyRoute);
     }
   }
 });

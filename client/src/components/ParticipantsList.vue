@@ -4,7 +4,7 @@
     <v-list-tile 
       v-for="item in items" 
       :key="item.id" 
-      :to="{name: 'admin.participants.edit', params: { id: item.id }}" 
+      :to="{name: 'admin.participant.edit', params: { id: item.id }}" 
       avatar>
       <v-list-tile-content>
         <v-list-tile-title v-text="item.firstName"/>
@@ -15,7 +15,6 @@
     </v-list-tile>
   </v-list>
 </template>
-
 
 <script lang="ts">
 import Vue from "vue";

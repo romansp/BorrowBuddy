@@ -9,13 +9,13 @@
         dark 
         color="primary">
         <v-btn 
-          :to="{ name: 'admin.participant' }" 
+          :to="adminCurrencyRoute" 
           exact
           icon 
           dark>
           <v-icon>close</v-icon>
         </v-btn>
-        <v-toolbar-title>Edit User</v-toolbar-title>
+        <v-toolbar-title>Edit Currency</v-toolbar-title>
         <v-spacer/>
         <v-toolbar-items>
           <v-btn 
@@ -36,7 +36,7 @@
               </v-card-title>
 
               <v-card-text>
-                Are you sure you want to remove participant?
+                Are you sure you want to remove currency?
               </v-card-text>
 
               <v-divider/>
@@ -62,9 +62,9 @@
           </v-dialog>
         </v-toolbar-items>
       </v-toolbar>
-      <v-card-text v-if="participant">
-        <ParticipantForm 
-          v-model="participant" 
+      <v-card-text v-if="currency">
+        <CurrencyForm 
+          v-model="currency" 
           @saved="goToList" />
       </v-card-text>
     </v-card>
@@ -74,13 +74,13 @@
 <script lang="ts">
 import Vue from "vue";
 
-import ParticipantForm from "@/components/ParticipantForm.vue";
-import { get, remove } from "@/services/participants.service";
-import { Participant } from "@/shared/models";
+import CurrencyForm from "@/components/CurrencyForm.vue";
+import { get, remove } from "@/services/currency.service";
+import { Currency } from "@/shared/models";
 
 export default Vue.extend({
   components: {
-    ParticipantForm
+    CurrencyForm
   },
 
   props: {
@@ -91,8 +91,12 @@ export default Vue.extend({
   },
 
   data() {
+    const adminCurrencyRoute = {
+      name: "admin.currency"
+    };
     return {
-      participant: undefined as Participant | undefined,
+      adminCurrencyRoute,
+      currency: undefined as Currency | undefined,
       deleting: false,
       opened: false,
       dialogRemove: false
@@ -100,7 +104,7 @@ export default Vue.extend({
   },
 
   async created() {
-    this.participant = await get(this.id);
+    this.currency = await get(this.id);
   },
 
   mounted() {
@@ -109,9 +113,7 @@ export default Vue.extend({
 
   methods: {
     goToList() {
-      this.$router.push({
-        name: "admin.participant"
-      });
+      this.$router.push(this.adminCurrencyRoute);
     },
 
     async remove() {

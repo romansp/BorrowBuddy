@@ -3,7 +3,7 @@
     v-model="drawer" 
     app>
     <v-list>
-      <v-list-tile to="/">
+      <v-list-tile :to="{ name: 'home'}">
         <v-list-tile-action>
           <v-icon>home</v-icon>
         </v-list-tile-action>
@@ -16,7 +16,7 @@
         <v-list-tile slot="activator">
           <v-list-tile-title>Settings</v-list-tile-title>
         </v-list-tile>
-        <v-list-tile to="/admin/participants">
+        <v-list-tile :to="{ name: 'admin.participant' }">
           <v-list-tile-content>
             <v-list-tile-title>Users</v-list-tile-title>
           </v-list-tile-content>
@@ -24,7 +24,7 @@
             <v-icon>account_circle</v-icon>
           </v-list-tile-action>
         </v-list-tile>
-        <v-list-tile to="/admin/currencies">
+        <v-list-tile :to="{ name: 'admin.currency' }">
           <v-list-tile-content>
             <v-list-tile-title>Currencies</v-list-tile-title>
           </v-list-tile-content>

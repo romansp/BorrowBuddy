@@ -32,12 +32,12 @@ export default new Router({
             {
               path: "add",
               name: "admin.currency.add",
-              component: AdminCurrenciesAdd
+              component: AdminParticipantsAdd
             },
             {
               path: ":id/edit",
               name: "admin.currency.edit",
-              component: AdminCurrenciesEdit,
+              component: AdminParticipantsEdit,
               props: true
             }
           ]
