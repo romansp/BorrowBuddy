@@ -16,7 +16,11 @@ namespace BorrowBuddy.Services {
     public async Task<long> BalanceAsync(Guid lenderId, Guid lendeeId, string code) {
       var from = await _context.Participants.FirstOrDefaultAsync(c => c.Id == lenderId);
       var to = await _context.Participants.FirstOrDefaultAsync(c => c.Id == lendeeId);
-      return from.Balance(to, code) - to.Balance(from, code);
+
+      var lended = _context.Entry(from).Collection(c => c.Lended).Query().Where(c => c.Lendee == to && c.Amount.Currency.Code == code).Sum(c => c.Amount.Value);
+      var borrowed = _context.Entry(from).Collection(c => c.Borrowed).Query().Where(c => c.Lender == to && c.Amount.Currency.Code == code).Sum(c => c.Amount.Value);
+
+      return lended - borrowed;
     }
   }
 
