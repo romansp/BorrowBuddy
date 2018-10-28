@@ -14,6 +14,12 @@
         </v-list-tile-action>
         <v-list-tile-title>Home</v-list-tile-title>
       </v-list-tile>
+      <v-list-tile :to="{ name: 'summary'}" >
+        <v-list-tile-action>
+          <v-icon>list</v-icon>
+        </v-list-tile-action>
+        <v-list-tile-title>Summary</v-list-tile-title>
+      </v-list-tile>
       <v-list-tile :to="{ name: 'history'}" >
         <v-list-tile-action>
           <v-icon>history</v-icon>
