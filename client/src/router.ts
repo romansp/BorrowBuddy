@@ -76,17 +76,11 @@ const options: RouterOptions = {
       children: [
         {
           ...routes["admin.currency"],
-          children: [
-            routes["admin.currency.add"],
-            routes["admin.currency.edit"]
-          ]
+          children: [routes["admin.currency.add"], routes["admin.currency.edit"]]
         },
         {
           ...routes["admin.participant"],
-          children: [
-            routes["admin.participant.add"],
-            routes["admin.participant.edit"]
-          ]
+          children: [routes["admin.participant.add"], routes["admin.participant.edit"]]
         }
       ]
     }

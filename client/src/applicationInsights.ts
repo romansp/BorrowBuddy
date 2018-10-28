@@ -8,10 +8,7 @@ export interface ApplicationInsightsOptions {
   router: VueRouter;
 }
 
-export default function(
-  vue: VueConstructor<Vue>,
-  options?: ApplicationInsightsOptions
-) {
+export default function(vue: VueConstructor<Vue>, options?: ApplicationInsightsOptions) {
   if (!options) return;
 
   const { id, router } = options;
@@ -28,10 +25,7 @@ export default function(
       });
 
       router.afterEach(route => {
-        AppInsights.stopTrackPage(
-          pathFormatter(route.fullPath),
-          route.fullPath
-        );
+        AppInsights.stopTrackPage(pathFormatter(route.fullPath), route.fullPath);
       });
     }
   }

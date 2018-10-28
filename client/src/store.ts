@@ -1,10 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import { getAll as getCurrencies } from "./services/currency.service";
-import {
-  balance as getBalance,
-  getAll as getParticipants
-} from "./services/participants.service";
+import { balance as getBalance, getAll as getParticipants } from "./services/participants.service";
 
 Vue.use(Vuex);
 

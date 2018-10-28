@@ -7,21 +7,14 @@ export const server = axios.create({
 
 export function exec<T>(cb: Promise<{}>): Promise<T> {
   const onFulfilled = (value: {}) => new PayloadMapper().fromObject<T>(value);
-  const onRejection = (reason: any) =>
-    new PayloadMapper().fromObject<T>(reason);
+  const onRejection = (reason: any) => new PayloadMapper().fromObject<T>(reason);
 
   return cb.then(onFulfilled, onRejection).then(processPayload);
 }
 
-function processPayload<T>(
-  payload: IPayload<T>,
-  messageTypeIds?: string[]
-): Promise<T> {
+function processPayload<T>(payload: IPayload<T>, messageTypeIds?: string[]): Promise<T> {
   const message = payload.message;
-  messageTypeIds = messageTypeIds || [
-    PayloadMessageTypes.error,
-    PayloadMessageTypes.failure
-  ];
+  messageTypeIds = messageTypeIds || [PayloadMessageTypes.error, PayloadMessageTypes.failure];
   const messageTypeId = messageTypeIds.find(o => o === message.messageTypeId);
 
   if (messageTypeId) {
