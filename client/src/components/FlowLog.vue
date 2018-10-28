@@ -1,18 +1,36 @@
 <template>
   <v-data-table
     :loading="loading"
-    :items="items" 
-    :headers="headers"
-    :pagination.sync="pagination">
+    :items="items"
+    :headers="headers" 
+    :pagination.sync="pagination"
+    item-key="id">
     <template 
       slot="items" 
-      slot-scope="{ item }">
-      <td><BbDate 
-        :value="item.timestamp" 
-        relative /></td>
-      <td>{{ item.from.firstName }} <v-icon class="icon-direction">arrow_right</v-icon> {{ item.to.firstName }}</td>
-      <td class="text-xs-right"><span class="text-small">{{ item.flow.currencyCode }}</span><br>{{ item.amount }}</td>
-      <td>{{ item.comment }}</td>
+      slot-scope="props">
+      <tr @click="props.expanded = !props.expanded">
+        <td>
+          <BbDate 
+            :value="props.item.timestamp" 
+            relative />
+        </td>
+        <td>{{ props.item.from.firstName }} <v-icon class="icon-direction">arrow_right</v-icon> {{ props.item.to.firstName }}</td>
+        <td class="text-xs-right"><span class="text-small">{{ props.item.flow.currencyCode }}</span><br>{{ props.item.amount }}</td>
+        <td>{{ props.item.comment }}</td>
+      </tr>
+    </template>
+    <template 
+      slot="expand" 
+      slot-scope="props">
+      <v-card flat>
+        <v-card-text>
+          <v-btn 
+            :loading="deleting"
+            color="warning" 
+            type="button"
+            @click="deleteFlow(props.item.flow)">Delete</v-btn>
+        </v-card-text>
+      </v-card>
     </template>
   </v-data-table>
 </template>
@@ -22,7 +40,7 @@ import Vue from "vue";
 import { mapState } from "vuex";
 
 import BbDate from "@/components/BbDate.vue";
-import { getAll } from "@/services/flows.service";
+import { getAll, remove } from "@/services/flows.service";
 import { Flow, Participant } from "@/shared/models";
 
 const headers = [
@@ -33,6 +51,7 @@ const headers = [
 ];
 
 interface LogItem {
+  id: string;
   timestamp: Date;
   from: Participant;
   to: Participant;
@@ -51,6 +70,7 @@ export default Vue.extend({
     const items: LogItem[] = [];
     return {
       loading: false,
+      deleting: false,
       items,
       headers,
       pagination: {
@@ -82,6 +102,7 @@ export default Vue.extend({
       const from: Participant = this.participants[flow.lender];
       const to: Participant = this.participants[flow.lendee];
       return {
+        id: flow.id,
         timestamp: new Date(flow.timestamp),
         from,
         to,
@@ -90,6 +111,16 @@ export default Vue.extend({
         amount: `${flow.amount / flow.currencyScale}`,
         comment: flow.comment
       };
+    },
+
+    async deleteFlow(flow: Flow) {
+      this.deleting = true;
+      try {
+        await remove(flow.id);
+        this.items = this.items.filter(item => item.id !== flow.id);
+      } catch {
+        this.deleting = false;
+      }
     }
   }
 });
