@@ -66,14 +66,7 @@ export class PayloadMapper {
 }
 
 function isAxiosResponse(o: any): o is AxiosResponse {
-  return (
-    o instanceof Object &&
-    "data" in o &&
-    "config" in o &&
-    "status" in o &&
-    "statusText" in o &&
-    "headers" in o
-  );
+  return o instanceof Object && "data" in o && "config" in o && "status" in o && "statusText" in o && "headers" in o;
 }
 
 function isAxiosError(o: any): o is AxiosError {

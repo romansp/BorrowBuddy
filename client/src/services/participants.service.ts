@@ -22,7 +22,5 @@ export function remove(id: string) {
 }
 
 export function balance(from: string, to: string, code: string) {
-  return exec<number>(
-    server.get(`/participants/${from}/balance/${to}/${code}`)
-  );
+  return exec<number>(server.get(`/participants/${from}/balance/${to}/${code}`));
 }
