@@ -12,6 +12,12 @@
         </v-list-tile-action>
         <v-list-tile-title>Home</v-list-tile-title>
       </v-list-tile>
+      <v-list-tile :to="{ name: 'log'}">
+        <v-list-tile-action>
+          <v-icon>home</v-icon>
+        </v-list-tile-action>
+        <v-list-tile-title>Log</v-list-tile-title>
+      </v-list-tile>
       <v-list-group 
         group="admin"
         prepend-icon="settings" 
