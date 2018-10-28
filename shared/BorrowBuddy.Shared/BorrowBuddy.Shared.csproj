@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Reinforced.Typings" Version="1.4.92" />
+    <PackageReference Include="Reinforced.Typings" Version="1.4.95" />
   </ItemGroup>
 
   <ItemGroup>
