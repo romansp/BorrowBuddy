@@ -1,15 +1,15 @@
 <template>
   <div class="home">
-    <FlowAdd />
+    <router-view />
   </div>
 </template>
 
 <script lang="ts">
-import FlowAdd from "@/components/FlowAdd.vue";
 import Vue from "vue";
 export default Vue.extend({
-  components: {
-    FlowAdd
+  async mounted() {
+    this.$store.dispatch("PARTICIPANTS_FETCH");
+    this.$store.dispatch("CURRENCIES_FETCH");
   }
 });
 </script>

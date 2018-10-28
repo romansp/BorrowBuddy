@@ -1,3 +1,4 @@
+import FlowAdd from "@/components/FlowAdd.vue";
 import Vue from "vue";
 import Router, { RouteConfig, RouterOptions } from "vue-router";
 import Admin from "./views/Admin.vue";
@@ -8,25 +9,38 @@ import AdminParticipants from "./views/AdminParticipants.vue";
 import AdminParticipantsAdd from "./views/AdminParticipantsAdd.vue";
 import AdminParticipantsEdit from "./views/AdminParticipantsEdit.vue";
 import Home from "./views/Home.vue";
+import Log from "./views/Log.vue";
 
 Vue.use(Router);
 
 // prettier-ignore
 export type Keys =
   | "home"
-    | "admin"
-      | "admin.currency"
-        | "admin.currency.add"
-        | "admin.currency.edit"
-      | "admin.participant"
-        | "admin.participant.add"
-        | "admin.participant.edit";
+    | "flow.add"
+    | "log"
+  | "admin"
+    | "admin.currency"
+      | "admin.currency.add"
+      | "admin.currency.edit"
+    | "admin.participant"
+      | "admin.participant.add"
+      | "admin.participant.edit";
 
 export const routes: { readonly [R in Keys]: RouteConfig } = {
   home: {
     path: "/",
     name: "home",
     component: Home
+  },
+  ["flow.add"]: {
+    path: "",
+    name: "flow.add",
+    component: FlowAdd
+  },
+  log: {
+    path: "log",
+    name: "log",
+    component: Log
   },
   admin: {
     path: "/admin",
@@ -69,7 +83,11 @@ export const routes: { readonly [R in Keys]: RouteConfig } = {
 
 const options: RouterOptions = {
   routes: [
-    routes.home,
+    {
+      ...routes.home,
+      redirect: routes["flow.add"],
+      children: [routes.log, routes["flow.add"]]
+    },
     {
       ...routes.admin,
       redirect: routes["admin.participant"],

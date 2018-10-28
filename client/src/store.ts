@@ -7,8 +7,8 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    participants: [],
-    currencies: [],
+    participants: {},
+    currencies: {},
     balance: {
       from: "",
       to: "",
@@ -18,10 +18,14 @@ export default new Vuex.Store({
   },
   mutations: {
     ["PARTICIPANTS_SET"](state, participants) {
-      state.participants = participants;
+      for (const participant of participants) {
+        Vue.set(state.participants, participant.id, participant);
+      }
     },
     ["CURRENCIES_SET"](state, currencies) {
-      state.currencies = currencies;
+      for (const currency of currencies) {
+        Vue.set(state.currencies, currency.code, currency);
+      }
     },
     ["BALANCE_SET"](state, { from, to, amount, code }) {
       state.balance = {

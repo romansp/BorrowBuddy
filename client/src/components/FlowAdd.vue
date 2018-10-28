@@ -101,19 +101,14 @@ export default Vue.extend({
 
   computed: {
     ...mapState<any>({
-      participants: state => state.participants,
-      currencies: state => state.currencies,
+      participants: state => Object.values(state.participants),
+      currencies: state => Object.values(state.currencies),
       balance: state => state.balance
     }),
     currencyScale(): number {
       const currency = this.currency as Currency | undefined;
       return currency ? 1 / currency.scale : 100;
     }
-  },
-
-  async mounted() {
-    this.$store.dispatch("PARTICIPANTS_FETCH");
-    this.$store.dispatch("CURRENCIES_FETCH");
   },
 
   methods: {
