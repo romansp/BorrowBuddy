@@ -7,10 +7,11 @@
     <template 
       slot="items" 
       slot-scope="{ item }">
-      <td>{{ item.timestamp }}</td>
-      <td>{{ item.from.firstName }}</td>
-      <td>{{ item.to.firstName }}</td>
-      <td class="text-xs-right">{{ item.amount }}</td>
+      <td><BbDate 
+        :value="item.timestamp" 
+        relative /></td>
+      <td>{{ item.from.firstName }} <v-icon class="icon-direction">arrow_right</v-icon> {{ item.to.firstName }}</td>
+      <td class="text-xs-right"><span class="text-small">{{ item.flow.currencyCode }}</span><br>{{ item.amount }}</td>
       <td>{{ item.comment }}</td>
     </template>
   </v-data-table>
@@ -20,26 +21,32 @@
 import Vue from "vue";
 import { mapState } from "vuex";
 
+import BbDate from "@/components/BbDate.vue";
 import { getAll } from "@/services/flows.service";
 import { Flow, Participant } from "@/shared/models";
 
 const headers = [
-  { text: "At", value: "timestamp" },
-  { text: "From", value: "from" },
-  { text: "To", value: "to" },
-  { text: "Amount", value: "amount" },
-  { text: "Comment", value: "comment" }
+  { text: "At", value: "timestamp", width: "5%" },
+  { text: "From - To", value: "flow", width: "50%" },
+  { text: "Amount", value: "amount", width: "5%" },
+  { text: "Comment", value: "comment", width: "50%" }
 ];
 
 interface LogItem {
   timestamp: Date;
   from: Participant;
   to: Participant;
-  amount: number;
+  flow: Flow;
+  flowDirection: string;
+  amount: string;
   comment: string;
 }
 
 export default Vue.extend({
+  components: {
+    BbDate
+  },
+
   data() {
     const items: LogItem[] = [];
     return {
@@ -72,14 +79,24 @@ export default Vue.extend({
     },
 
     toLogItem(flow: Flow): LogItem {
+      const from: Participant = this.participants[flow.lender];
+      const to: Participant = this.participants[flow.lendee];
       return {
         timestamp: new Date(flow.timestamp),
-        from: this.participants[flow.lender],
-        to: this.participants[flow.lendee],
-        amount: flow.amount,
+        from,
+        to,
+        flow,
+        flowDirection: `${from.firstName}-${to.firstName}`,
+        amount: `${flow.amount / flow.currencyScale}`,
         comment: flow.comment
       };
     }
   }
 });
 </script>
+
+<style lang="scss" scoped>
+.icon-direction {
+  font-size: inherit;
+}
+</style>
