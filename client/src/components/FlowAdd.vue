@@ -80,7 +80,7 @@ import Vue from "vue";
 import { mapState } from "vuex";
 
 import { Currency, Participant } from "@/shared/models";
-import { add, getAll } from "../services/flows.service";
+import { add } from "../services/flows.service";
 import Balance from "./Balance.vue";
 
 export default Vue.extend({

@@ -8,8 +8,8 @@ import AdminCurrenciesEdit from "./views/AdminCurrenciesEdit.vue";
 import AdminParticipants from "./views/AdminParticipants.vue";
 import AdminParticipantsAdd from "./views/AdminParticipantsAdd.vue";
 import AdminParticipantsEdit from "./views/AdminParticipantsEdit.vue";
+import History from "./views/History.vue";
 import Home from "./views/Home.vue";
-import Log from "./views/Log.vue";
 
 Vue.use(Router);
 
@@ -17,7 +17,7 @@ Vue.use(Router);
 export type Keys =
   | "home"
     | "flow.add"
-    | "log"
+    | "history"
   | "admin"
     | "admin.currency"
       | "admin.currency.add"
@@ -37,10 +37,10 @@ export const routes: { readonly [R in Keys]: RouteConfig } = {
     name: "flow.add",
     component: FlowAdd
   },
-  log: {
-    path: "log",
-    name: "log",
-    component: Log
+  history: {
+    path: "history",
+    name: "history",
+    component: History
   },
   admin: {
     path: "/admin",
@@ -86,7 +86,7 @@ const options: RouterOptions = {
     {
       ...routes.home,
       redirect: routes["flow.add"],
-      children: [routes.log, routes["flow.add"]]
+      children: [routes.history, routes["flow.add"]]
     },
     {
       ...routes.admin,

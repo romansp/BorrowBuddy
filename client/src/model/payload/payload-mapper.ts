@@ -1,7 +1,6 @@
 import { AxiosError, AxiosResponse } from "axios";
 import { PayloadMessageTypes } from "../../common/message";
 import { IPayload } from "./index";
-import { IPayloadMessage } from "./payload-message";
 
 export { PayloadMessageTypes } from "../../common/message";
 
@@ -33,12 +32,6 @@ export class PayloadMapper {
   }
 
   private fromAxiosError<T>(o: AxiosError): IPayload<T> {
-    let data;
-
-    if (o.response && isAxiosResponse(o.response)) {
-      data = this.fromAxiosResponse<T>(o.response).data;
-    }
-
     return {
       message: {
         messageTypeId: PayloadMessageTypes.error,

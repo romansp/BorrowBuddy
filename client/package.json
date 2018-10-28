@@ -12,6 +12,7 @@
   "dependencies": {
     "applicationinsights-js": "^1.0.20",
     "axios": "^0.18.0",
+    "date-fns": "2.0.0-alpha.24",
     "register-service-worker": "^1.5.2",
     "vue": "^2.5.17",
     "vue-router": "^3.0.1",

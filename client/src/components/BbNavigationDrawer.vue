@@ -6,17 +6,19 @@
     hide-overlay
     app>
     <v-list>
-      <v-list-tile :to="{ name: 'home'}">
+      <v-list-tile 
+        :to="{ name: 'home'}" 
+        exact>
         <v-list-tile-action>
           <v-icon>home</v-icon>
         </v-list-tile-action>
         <v-list-tile-title>Home</v-list-tile-title>
       </v-list-tile>
-      <v-list-tile :to="{ name: 'log'}">
+      <v-list-tile :to="{ name: 'history'}" >
         <v-list-tile-action>
-          <v-icon>home</v-icon>
+          <v-icon>history</v-icon>
         </v-list-tile-action>
-        <v-list-tile-title>Log</v-list-tile-title>
+        <v-list-tile-title>History</v-list-tile-title>
       </v-list-tile>
       <v-list-group 
         group="admin"
