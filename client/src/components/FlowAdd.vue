@@ -142,6 +142,7 @@ export default Vue.extend({
       const temp = this.from;
       this.from = this.to;
       this.to = temp;
+      this.updateBalance();
     },
 
     skip(items: Participant[], selected: string) {
