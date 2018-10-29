@@ -15,11 +15,11 @@ namespace BorrowBuddy.Services {
     }
 
     public Task<List<Flow>> GetAsync() {
-      return _context.Flows.ToListAsync();
+      return _context.Flows.Include(c => c.Amount).ThenInclude(d => d.Currency).ToListAsync();
     }
 
     public Task<Flow> GetAsync(Guid id) {
-      return _context.Flows.FirstOrDefaultAsync(c => c.Id == id);
+      return _context.Flows.Include(c => c.Amount).ThenInclude(d => d.Currency).FirstOrDefaultAsync(c => c.Id == id);
     }
 
     public async Task<Flow> AddAsync(FlowDto dto) {
