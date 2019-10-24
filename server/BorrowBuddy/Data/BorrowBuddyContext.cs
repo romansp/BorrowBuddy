@@ -1,5 +1,6 @@
 using BorrowBuddy.Domain;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.SqlServer;
 
 namespace BorrowBuddy.Data {
   public class BorrowBuddyContext : DbContext {
@@ -20,7 +21,7 @@ namespace BorrowBuddy.Data {
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
-      if(!optionsBuilder.IsConfigured) {
+      if (!optionsBuilder.IsConfigured) {
         optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EFProviders.InMemory;Trusted_Connection=True;ConnectRetryCount=0");
       }
     }
