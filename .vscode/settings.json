@@ -7,7 +7,7 @@
     "**/.DS_Store": true,
     "**/*.map": true,
     "**/.vs": true,
-    "**/node_modules": true,
+    "**/node_modules": true
   },
   "typescript.tsdk": "client/node_modules/typescript/lib",
   "typescript.preferences.quoteStyle": "double",
@@ -23,5 +23,7 @@
       "language": "typescript",
       "autoFix": true
     }
-  ]
+  ],
+  "omnisharp.enableEditorConfigSupport": true,
+  "omnisharp.enableRoslynAnalyzers": true
 }
