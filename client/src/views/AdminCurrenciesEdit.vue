@@ -3,26 +3,32 @@
     v-model="opened"
     fullscreen
     hide-overlay 
-    transition="dialog-bottom-transition">
+    transition="dialog-bottom-transition"
+  >
     <v-card>
       <v-toolbar 
         dark 
-        color="primary">
+        color="primary"
+      >
         <v-btn 
           :to="routeList" 
           exact
           icon 
-          dark>
+          dark
+        >
           <v-icon>close</v-icon>
         </v-btn>
         <v-toolbar-title>Edit Currency</v-toolbar-title>
-        <v-spacer/>
+        <v-spacer />
         <v-toolbar-items>
           <v-btn 
             :loading="deleting"
             dark 
             flat
-            @click="dialogRemove = true">Remove</v-btn>
+            @click="dialogRemove = true"
+          >
+            Remove
+          </v-btn>
           <v-dialog
             v-model="dialogRemove"
             width="500"
@@ -39,7 +45,7 @@
                 Are you sure you want to remove currency?
               </v-card-text>
 
-              <v-divider/>
+              <v-divider />
 
               <v-card-actions>
                 <v-btn
@@ -49,7 +55,7 @@
                 >
                   Cancel
                 </v-btn>
-                <v-spacer/>
+                <v-spacer />
                 <v-btn
                   color="primary"
                   flat
@@ -65,7 +71,8 @@
       <v-card-text v-if="currency">
         <CurrencyForm 
           v-model="currency" 
-          @saved="goToList" />
+          @saved="goToList"
+        />
       </v-card-text>
     </v-card>
   </v-dialog>

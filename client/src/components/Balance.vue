@@ -3,12 +3,14 @@
     :value="amount"
     tabindex="-1" 
     label="Current balance"
-    readonly />
+    readonly
+  />
 </template>
 
 
 <script lang="ts">
 import Vue from "vue";
+
 export default Vue.extend({
   props: {
     amount: {

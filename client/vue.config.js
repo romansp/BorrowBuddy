@@ -5,8 +5,10 @@ module.exports = {
   css: {
     loaderOptions: {
       sass: {
-        data: "@import '@/styles/app/_variables.scss';"
-      }
-    }
-  }
+        prependData: `
+          @import '@/styles/app/_variables.scss';
+        `,
+      },
+    },
+  },
 };

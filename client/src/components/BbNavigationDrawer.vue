@@ -4,45 +4,48 @@
     absolute
     temporary
     hide-overlay
-    app>
+    app
+  >
     <v-list>
-      <v-list-tile 
+      <v-list-item 
         :to="{ name: 'home'}" 
-        exact>
-        <v-list-tile-action>
+        exact
+      >
+        <v-list-item-action>
           <v-icon>home</v-icon>
-        </v-list-tile-action>
-        <v-list-tile-title>Home</v-list-tile-title>
-      </v-list-tile>
-      <v-list-tile :to="{ name: 'history'}" >
-        <v-list-tile-action>
+        </v-list-item-action>
+        <v-list-item-title>Home</v-list-item-title>
+      </v-list-item>
+      <v-list-item :to="{ name: 'history'}">
+        <v-list-item-action>
           <v-icon>history</v-icon>
-        </v-list-tile-action>
-        <v-list-tile-title>History</v-list-tile-title>
-      </v-list-tile>
+        </v-list-item-action>
+        <v-list-item-title>History</v-list-item-title>
+      </v-list-item>
       <v-list-group 
         group="admin"
         prepend-icon="settings" 
-        no-action>
-        <v-list-tile slot="activator">
-          <v-list-tile-title>Settings</v-list-tile-title>
-        </v-list-tile>
-        <v-list-tile :to="{ name: 'admin.participant' }">
-          <v-list-tile-content>
-            <v-list-tile-title>Users</v-list-tile-title>
-          </v-list-tile-content>
-          <v-list-tile-action>
+        no-action
+      >
+        <v-list-item slot="activator">
+          <v-list-item-title>Settings</v-list-item-title>
+        </v-list-item>
+        <v-list-item :to="{ name: 'admin.participant' }">
+          <v-list-item-content>
+            <v-list-item-title>Users</v-list-item-title>
+          </v-list-item-content>
+          <v-list-item-action>
             <v-icon>account_circle</v-icon>
-          </v-list-tile-action>
-        </v-list-tile>
-        <v-list-tile :to="{ name: 'admin.currency' }">
-          <v-list-tile-content>
-            <v-list-tile-title>Currencies</v-list-tile-title>
-          </v-list-tile-content>
-          <v-list-tile-action>
+          </v-list-item-action>
+        </v-list-item>
+        <v-list-item :to="{ name: 'admin.currency' }">
+          <v-list-item-content>
+            <v-list-item-title>Currencies</v-list-item-title>
+          </v-list-item-content>
+          <v-list-item-action>
             <v-icon>attach_money</v-icon>
-          </v-list-tile-action>
-        </v-list-tile>
+          </v-list-item-action>
+        </v-list-item>
       </v-list-group>
     </v-list>
   </v-navigation-drawer>
@@ -50,6 +53,7 @@
 
 <script lang="ts">
 import Vue from "vue";
+
 export default Vue.extend({
   props: {
     value: {

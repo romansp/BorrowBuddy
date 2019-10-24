@@ -6,7 +6,8 @@
         :route="routeEdit"
         title="Users"
         item-key="id"
-        item-label="firstName"/>
+        item-label="firstName"
+      />
       <v-card-text style="position: relative">
         <v-btn
           :to="routeAdd"
@@ -21,7 +22,7 @@
         </v-btn>
       </v-card-text>
     </v-card>
-    <router-view/>
+    <router-view />
   </div>
 </template>
 
@@ -49,6 +50,7 @@ export default Vue.extend({
   },
 
   watch: {
+    // eslint-disable-next-line object-shorthand
     async "$route.name"(val): Promise<void | null> {
       if (val === routes["admin.participant"].name) {
         return this.fetch();

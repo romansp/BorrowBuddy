@@ -2,29 +2,35 @@
   <div>
     <form 
       method="post" 
-      @submit.prevent="submit">
+      @submit.prevent="submit"
+    >
       <div>
         Code:
         <input 
           v-model="code" 
           type="text" 
-          name="Code">
+          name="Code"
+        >
       </div>
       <div>
         Symbol:
         <input 
           v-model="symbol" 
           type="text" 
-          name="Symbol">
+          name="Symbol"
+        >
       </div>
       <div>
         Scale:
         <input 
           v-model="scale" 
           type="number" 
-          name="Scale">
+          name="Scale"
+        >
       </div>
-      <button type="submit">OK</button>
+      <button type="submit">
+        OK
+      </button>
     </form>
   </div>
 </template>

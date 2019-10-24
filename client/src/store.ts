@@ -17,17 +17,17 @@ export default new Vuex.Store({
     }
   },
   mutations: {
-    ["PARTICIPANTS_SET"](state, participants) {
+    PARTICIPANTS_SET(state, participants) {
       for (const participant of participants) {
         Vue.set(state.participants, participant.id, participant);
       }
     },
-    ["CURRENCIES_SET"](state, currencies) {
+    CURRENCIES_SET(state, currencies) {
       for (const currency of currencies) {
         Vue.set(state.currencies, currency.code, currency);
       }
     },
-    ["BALANCE_SET"](state, { from, to, amount, code }) {
+    BALANCE_SET(state, { from, to, amount, code }) {
       state.balance = {
         code,
         from,
@@ -37,13 +37,13 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    async ["PARTICIPANTS_FETCH"]({ commit }) {
+    async PARTICIPANTS_FETCH({ commit }) {
       commit("PARTICIPANTS_SET", await getParticipants());
     },
-    async ["CURRENCIES_FETCH"]({ commit }) {
+    async CURRENCIES_FETCH({ commit }) {
       commit("CURRENCIES_SET", await getCurrencies());
     },
-    async ["BALANCE_FETCH"]({ commit }, { from, to, code }) {
+    async BALANCE_FETCH({ commit }, { from, to, code }) {
       commit("BALANCE_SET", {
         from,
         to,

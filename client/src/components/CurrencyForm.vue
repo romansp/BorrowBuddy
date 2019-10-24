@@ -4,7 +4,8 @@
     v-model="valid" 
     lazy-validation
     method="post" 
-    @submit.prevent="submit">
+    @submit.prevent="submit"
+  >
     <v-text-field
       v-model="model.code"
       spellcheck="false"
@@ -48,7 +49,7 @@ export default Vue.extend({
   },
 
   data() {
-    const shouldUpdate = this.value.code !== "" ? true : false;
+    const shouldUpdate = this.value.code !== "";
     return {
       shouldUpdate,
       valid: false,

@@ -3,16 +3,19 @@
     v-model="opened"
     fullscreen
     hide-overlay 
-    transition="dialog-bottom-transition">
+    transition="dialog-bottom-transition"
+  >
     <v-card>
       <v-toolbar 
         dark 
-        color="primary">
+        color="primary"
+      >
         <v-btn 
           :to="{ name: 'admin.participant' }" 
           exact
           icon 
-          dark>
+          dark
+        >
           <v-icon>close</v-icon>
         </v-btn>
         <v-toolbar-title>Add User</v-toolbar-title>
@@ -20,7 +23,8 @@
       <v-card-text>
         <ParticipantForm 
           v-model="participant" 
-          @saved="goToList" />
+          @saved="goToList"
+        />
       </v-card-text>
     </v-card>
   </v-dialog>

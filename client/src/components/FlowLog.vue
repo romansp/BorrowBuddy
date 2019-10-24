@@ -4,31 +4,44 @@
     :items="items"
     :headers="headers" 
     :pagination.sync="pagination"
-    item-key="id">
+    item-key="id"
+  >
     <template 
       slot="items" 
-      slot-scope="props">
+      slot-scope="props"
+    >
       <tr @click="props.expanded = !props.expanded">
         <td>
           <BbDate 
             :value="props.item.timestamp" 
-            relative />
+            relative
+          />
         </td>
-        <td>{{ props.item.from.firstName }} <v-icon class="icon-direction">arrow_right</v-icon> {{ props.item.to.firstName }}</td>
-        <td class="text-xs-right"><span class="text-small">{{ props.item.flow.currencyCode }}</span><br>{{ props.item.amount }}</td>
+        <td>
+          {{ props.item.from.firstName }} <v-icon class="icon-direction">
+            arrow_right
+          </v-icon> {{ props.item.to.firstName }}
+        </td>
+        <td class="text-xs-right">
+          <span class="text-small">{{ props.item.flow.currencyCode }}</span><br>{{ props.item.amount }}
+        </td>
         <td>{{ props.item.comment }}</td>
       </tr>
     </template>
     <template 
       slot="expand" 
-      slot-scope="props">
+      slot-scope="props"
+    >
       <v-card flat>
         <v-card-text>
           <v-btn 
             :loading="deleting"
             color="warning" 
             type="button"
-            @click="deleteFlow(props.item.flow)">Delete</v-btn>
+            @click="deleteFlow(props.item.flow)"
+          >
+            Delete
+          </v-btn>
         </v-card-text>
       </v-card>
     </template>

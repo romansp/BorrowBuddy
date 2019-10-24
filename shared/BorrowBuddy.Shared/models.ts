@@ -19,6 +19,12 @@ export interface Flow
   comment: string;
   timestamp: string;
 }
+export interface FlowLog
+{
+  flow: Flow;
+  lender: Participant;
+  lendee: Participant;
+}
 export interface Participant
 {
   id: string;

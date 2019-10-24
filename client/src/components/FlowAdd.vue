@@ -1,7 +1,8 @@
 <template>
   <form 
     method="post" 
-    @submit.prevent="submit">
+    @submit.prevent="submit"
+  >
     <v-layout 
       row 
     >
@@ -13,7 +14,8 @@
           return-object
           name="from"
           item-text="code"
-          label="Currency"/>
+          label="Currency"
+        />
       </v-flex>
      
       <v-text-field
@@ -36,13 +38,15 @@
           item-text="firstName"
           item-value="id"
           label="From"
-          @change="updateBalance"/>
+          @change="updateBalance"
+        />
       </v-flex>
       <v-flex class="swap-button">
         <v-btn 
           type="button"
           title="Swap" 
-          @click="swap">
+          @click="swap"
+        >
           <v-icon>swap_horiz</v-icon>
         </v-btn>
       </v-flex>
@@ -55,12 +59,14 @@
           item-text="firstName"
           item-value="id"
           label="To"
-          @change="updateBalance"/>
+          @change="updateBalance"
+        />
       </v-flex>
     </v-layout>
     <div>
       <Balance 
-        :amount="balance.amount * currencyScale" />
+        :amount="balance.amount * currencyScale"
+      />
     </div>
     <v-textarea
       v-model="comment" 
@@ -70,7 +76,10 @@
     />
     <v-btn 
       :loading="submitting" 
-      type="submit">OK</v-btn>
+      type="submit"
+    >
+      OK
+    </v-btn>
   </form>
 </template>
 
@@ -91,7 +100,7 @@ export default Vue.extend({
   data() {
     return {
       currency: undefined as Currency | undefined,
-      amount: undefined,
+      amount: undefined as number | undefined,
       submitting: false,
       from: "",
       to: "",

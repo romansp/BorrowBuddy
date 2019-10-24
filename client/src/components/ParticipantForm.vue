@@ -4,7 +4,8 @@
     v-model="valid" 
     lazy-validation
     method="post" 
-    @submit.prevent="submit">
+    @submit.prevent="submit"
+  >
     <v-text-field
       v-model="model.firstName"
       autofocus

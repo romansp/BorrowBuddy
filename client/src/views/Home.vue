@@ -6,6 +6,7 @@
 
 <script lang="ts">
 import Vue from "vue";
+
 export default Vue.extend({
   async mounted() {
     this.$store.dispatch("PARTICIPANTS_FETCH");
