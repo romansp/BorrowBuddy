@@ -4,11 +4,13 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-using Swashbuckle.AspNetCore.Swagger;
+using Swashbuckle.AspNetCore.SwaggerGen;
 using Microsoft.Net.Http.Headers;
 using Microsoft.AspNetCore.Http;
 using System;
+using Microsoft.OpenApi.Models;
 
 namespace BorrowBuddy {
   public class Startup {
@@ -24,27 +26,28 @@ namespace BorrowBuddy {
       services.AddTransient<FlowService>();
       services.AddTransient<BalanceService>();
       services.AddResponseCaching();
-      services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-      services.AddCors(options =>
-        options.AddPolicy("CorsPolicy", builder =>
-          builder.AllowAnyOrigin()
-                 .AllowAnyMethod()
-                 .AllowAnyHeader()
-                 .AllowCredentials()
-          )
+      services.AddApplicationInsightsTelemetry();
+      services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+      services.AddCors(options => {
+          options.AddPolicy("CorsPolicy", builder => builder 
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .AllowCredentials()
+                        .SetIsOriginAllowed(origin => true)
+                    );
+        }
       );
 
       var appConfig = services.AddAppConfig(Configuration);
       var connectionString = Configuration.GetConnectionString();
       services.AddDbContext(appConfig.DbDialect, connectionString);
       services.AddScoped<DbMigrator>();
-      services.AddSwaggerGen(c => c.SwaggerDoc("api", new Info { Title = "BorrowBuddy" }));
+      services.AddSwaggerGen(c => c.SwaggerDoc("api", new OpenApiInfo { Title = "BorrowBuddy" }));
     }
 
-    public void Configure(IApplicationBuilder app, IHostingEnvironment env) {
-      if(env.IsDevelopment()) {
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env) {
+      if (env.IsDevelopment()) {
         app.UseDeveloperExceptionPage();
-        app.UseCors("CorsPolicy");
       } else {
         app.UseHsts();
       }
@@ -53,7 +56,7 @@ namespace BorrowBuddy {
       app.UseDefaultFiles();
       app.UseStaticFiles(new StaticFileOptions() {
         OnPrepareResponse = ctx => {
-          if(!string.Equals("service-worker.js", ctx.File.Name, StringComparison.OrdinalIgnoreCase)) {
+          if (!string.Equals("service-worker.js", ctx.File.Name, StringComparison.OrdinalIgnoreCase)) {
             return;
           }
           var headers = ctx.Context.Response.GetTypedHeaders();
@@ -65,7 +68,17 @@ namespace BorrowBuddy {
           headers.Expires = DateTimeOffset.UtcNow.AddDays(-1);
         }
       });
-      app.UseMvc();
+
+      app.UseRouting();
+      app.UseCors();
+
+      if (env.IsDevelopment()) {
+        app.UseCors("CorsPolicy");
+      }
+
+      app.UseEndpoints(endpoints => {
+        endpoints.MapDefaultControllerRoute();
+      });
       app.UseSwagger();
       app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/api/swagger.json", "BorrowBuddy"));
     }
