@@ -22,14 +22,13 @@
         </v-btn>
       </v-card-text>
     </v-card>
-    <router-view/>
+    <router-view />
   </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
 
-import CurrencyAdd from "@/components/CurrencyAdd.vue";
 import ItemList from "@/components/ItemList.vue";
 import { routes } from "@/router";
 import { getAll } from "@/services/currency.service";
@@ -37,7 +36,6 @@ import { Currency } from "@/shared/models";
 
 export default Vue.extend({
   components: {
-    CurrencyAdd,
     ItemList
   },
 
@@ -52,6 +50,7 @@ export default Vue.extend({
   },
 
   watch: {
+    // eslint-disable-next-line object-shorthand
     async "$route.name"(val): Promise<void | null> {
       if (val === routes["admin.currency"].name) {
         return this.fetch();

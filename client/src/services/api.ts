@@ -12,9 +12,11 @@ export function exec<T>(cb: Promise<{}>): Promise<T> {
   return cb.then(onFulfilled, onRejection).then(processPayload);
 }
 
-function processPayload<T>(payload: IPayload<T>, messageTypeIds?: string[]): Promise<T> {
-  const message = payload.message;
-  messageTypeIds = messageTypeIds || [PayloadMessageTypes.error, PayloadMessageTypes.failure];
+function processPayload<T>(
+  payload: IPayload<T>,
+  messageTypeIds: string[] = [PayloadMessageTypes.error, PayloadMessageTypes.failure]
+): Promise<T> {
+  const { message } = payload;
   const messageTypeId = messageTypeIds.find(o => o === message.messageTypeId);
 
   if (messageTypeId) {

@@ -1,10 +1,11 @@
 import Vue from "vue";
+
 import App from "./App.vue";
 import AppInsights from "./applicationInsights";
 import "./registerServiceWorker";
 import router from "./router";
 import store from "./store";
-import "./vendor";
+import vuetify from "./vendor/vuetify";
 
 Vue.config.productionTip = false;
 
@@ -18,5 +19,6 @@ if (process.env.NODE_ENV === "production") {
 new Vue({
   router,
   store,
+  vuetify,
   render: h => h(App)
 }).$mount("#app");

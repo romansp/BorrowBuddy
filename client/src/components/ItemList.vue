@@ -1,23 +1,25 @@
 <template>
   <v-list subheader>
     <v-subheader>{{ title }}</v-subheader>
-    <v-list-tile 
+    <v-list-item 
       v-for="item in items" 
       :key="item[itemKey]" 
       :to="{ name: route.name, params: { id: item[itemKey] } }" 
-      avatar>
-      <v-list-tile-content>
-        <v-list-tile-title v-text="item[itemLabel]"/>
-      </v-list-tile-content>
-      <v-list-tile-action>
+      avatar
+    >
+      <v-list-item-content>
+        <v-list-item-title v-text="item[itemLabel]" />
+      </v-list-item-content>
+      <v-list-item-action>
         <v-icon>edit</v-icon>
-      </v-list-tile-action>
-    </v-list-tile>
+      </v-list-item-action>
+    </v-list-item>
   </v-list>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
+
 export default Vue.extend({
   props: {
     items: {

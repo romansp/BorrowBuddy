@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 import { AxiosError, AxiosResponse } from "axios";
 import { PayloadMessageTypes } from "../../common/message";
 import { IPayload } from "./index";
@@ -36,7 +37,7 @@ export class PayloadMapper {
       message: {
         messageTypeId: PayloadMessageTypes.error,
         text: o.message,
-        title: "Code:" + o.code + ". " + o.name
+        title: `Code:${o.code}. ${o.name}`
       }
     };
   }

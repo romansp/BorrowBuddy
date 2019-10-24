@@ -1,6 +1,6 @@
-import FlowAdd from "@/components/FlowAdd.vue";
 import Vue from "vue";
 import Router, { RouteConfig, RouterOptions } from "vue-router";
+import FlowAdd from "@/components/FlowAdd.vue";
 import Admin from "./views/Admin.vue";
 import AdminCurrencies from "./views/AdminCurrencies.vue";
 import AdminCurrenciesAdd from "./views/AdminCurrenciesAdd.vue";
@@ -32,7 +32,7 @@ export const routes: { readonly [R in Keys]: RouteConfig } = {
     name: "home",
     component: Home
   },
-  ["flow.add"]: {
+  "flow.add": {
     path: "",
     name: "flow.add",
     component: FlowAdd
