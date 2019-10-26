@@ -1,0 +1,22 @@
+name: .NET Core
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.0.100
+     
+    - name: build
+      working-directory: ./server/test/BorrowBuddy.Test
+      run: dotnet build --configuration Release
+    - name: test
+      working-directory: ./server/BorrowBuddy
+      run: dotnet test
