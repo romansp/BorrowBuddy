@@ -15,8 +15,8 @@ jobs:
         dotnet-version: 3.0.100
      
     - name: build
-      working-directory: ./server/test/BorrowBuddy.Test
       run: dotnet build --configuration Release
-    - name: test
       working-directory: ./server/BorrowBuddy
+    - name: test
       run: dotnet test
+      working-directory: ./server/test/BorrowBuddy.Test
